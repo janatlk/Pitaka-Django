@@ -1,0 +1,55 @@
+# Docker
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+*.egg-info/
+.eggs/
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+!README.md
+
+# Development
+db.sqlite3
+media/
+staticfiles/
+.qwen/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+logs/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Previous files (not needed for deployment)
+pitaka_previous_files/
+
+# Development scripts
+fix_*.py
+check_*.py
+seed_*.py
+parse_*.py
+copy_*.py
