@@ -99,6 +99,22 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+# Static files storage for production
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+# Static files finders
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
 # Media files (user uploaded)
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
