@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if active_filters.device_type %}
+        {{ active_filters.device_type|title }} - Чехлы PITAKA
+    {% elif active_filters.design %}
+        {{ active_filters.design }} - Коллекция
+    {% elif active_filters.series %}
+        {{ active_filters.series }} - Серия
+    {% else %}
+        Каталог - PITAKA
+    {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="catalog-page">
+    
+    <!-- ================= SIDEBAR FILTERS ================= -->
+    <aside class="catalog-sidebar">
+        <div class="filter-section">
+            <h3>Фильтры</h3>
+            
+            <!-- Search -->
+            <form method="GET" action="{% url 'catalog:catalog' %}" class="filter-search">
+                <input type="text" name="q" placeholder="Поиск..." value="{{ request.GET.q }}">
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+
+            <!-- Device Type -->
+            <div class="filter-group">
+                <h4>Устройство</h4>
+                <div class="filter-options">
+                    {% for device in device_types %}
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="device_type" value="{{ device }}"
+                               {% if active_filters.device_type == device %}checked{% endif %}
+                               onchange="this.form.submit()">
+                        {{ device|title }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Series -->
+            <div class="filter-group">
+                <h4>Серия</h4>
+                <div class="filter-options">
+                    {% for series in series_list %}
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="series" value="{{ series }}"
+                               {% if active_filters.series == series %}checked{% endif %}
+                               onchange="this.form.submit()">
+                        {{ series|title }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Design -->
+            <div class="filter-group">
+                <h4>Дизайн</h4>
+                <div class="filter-options">
+                    {% for design in designs %}
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="design" value="{{ design }}"
+                               {% if active_filters.design == design %}checked{% endif %}
+                               onchange="this.form.submit()">
+                        {{ design }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Price Range -->
+            <div class="filter-group">
+                <h4>Цена</h4>
+                <div class="price-inputs">
+                    <input type="number" name="min_price" placeholder="От" value="{{ request.GET.min_price }}">
+                    <input type="number" name="max_price" placeholder="До" value="{{ request.GET.max_price }}">
+                </div>
+                <button type="button" onclick="applyPriceFilter()" class="apply-btn">Применить</button>
+            </div>
+
+            <!-- Clear Filters -->
+            {% if active_filters.device_type or active_filters.series or active_filters.design %}
+            <a href="{% url 'catalog:catalog' %}" class="clear-filters">
+                <i class="fa-solid fa-xmark"></i> Сбросить фильтры
+            </a>
+            {% endif %}
+        </div>
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="catalog-main">
+        
+        <!-- Header -->
+        <div class="catalog-header">
+            <h1>
+                {% if active_filters.device_type %}
+                    {{ active_filters.device_type|title }}
+                {% elif active_filters.design %}
+                    Дизайн: {{ active_filters.design }}
+                {% elif active_filters.series %}
+                    Серия: {{ active_filters.series|title }}
+                {% else %}
+                    Каталог
+                {% endif %}
+            </h1>
+            
+            <div class="catalog-controls">
+                <span class="results-count">{{ page_obj.paginator.count }} товаров</span>
+                
+                <select name="order" onchange="applyOrderFilter(this.value)">
+                    <option value="-is_featured" {% if request.GET.order == '-is_featured' %}selected{% endif %}>Популярные</option>
+                    <option value="newest" {% if request.GET.order == 'newest' %}selected{% endif %}>Новинки</option>
+                    <option value="price_asc" {% if request.GET.order == 'price_asc' %}selected{% endif %}>Сначала дешёвые</option>
+                    <option value="price_desc" {% if request.GET.order == 'price_desc' %}selected{% endif %}>Сначала дорогие</option>
+                    <option value="name" {% if request.GET.order == 'name' %}selected{% endif %}>По названию</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Active Filters Tags -->
+        {% if active_filters.device_type or active_filters.series or active_filters.design %}
+        <div class="active-filters">
+            {% if active_filters.device_type %}
+            <span class="filter-tag">
+                {{ active_filters.device_type|title }}
+                <a href="?{% for k, v in request.GET.items %}{% if k != 'device_type' %}&{{ k }}={{ v }}{% endif %}{% endfor %}"><i class="fa-solid fa-xmark"></i></a>
+            </span>
+            {% endif %}
+            
+            {% if active_filters.series %}
+            <span class="filter-tag">
+                {{ active_filters.series|title }}
+                <a href="?{% for k, v in request.GET.items %}{% if k != 'series' %}&{{ k }}={{ v }}{% endif %}{% endfor %}"><i class="fa-solid fa-xmark"></i></a>
+            </span>
+            {% endif %}
+            
+            {% if active_filters.design %}
+            <span class="filter-tag">
+                {{ active_filters.design }}
+                <a href="?{% for k, v in request.GET.items %}{% if k != 'design' %}&{{ k }}={{ v }}{% endif %}{% endfor %}"><i class="fa-solid fa-xmark"></i></a>
+            </span>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Products Grid -->
+        {% if products %}
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <a href="{{ product.get_absolute_url }}">
+                    <div class="product-image">
+                        {% if product.images.first %}
+                        <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                        <img src="{% static 'pitaka/images/webp/placeholder.webp' %}" alt="{{ product.name }}">
+                        {% endif %}
+
+                        {% if product.is_new %}
+                        <span class="badge-new">NEW</span>
+                        {% endif %}
+
+                        {% if product.is_on_sale %}
+                        <span class="badge-sale">-{{ product.discount_percent }}%</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="product-info">
+                        <span class="product-model">{{ product.device_model }}</span>
+                        <h3>{{ product.design_name }}</h3>
+                        <span class="product-series">{{ product.get_series_display }}</span>
+                        
+                        <div class="product-price">
+                            {% if product.is_on_sale %}
+                                <span class="sale-price">{{ product.sale_price|floatformat:0 }} ₽</span>
+                                <span class="original-price">{{ product.price|floatformat:0 }} ₽</span>
+                            {% else %}
+                                <span>{{ product.price|floatformat:0 }} ₽</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+                
+                <button class="add-to-cart-btn" onclick="addToCart({{ product.pk }})">
+                    <i class="fa-solid fa-cart-plus"></i>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <nav class="pagination">
+            <ul class="pagination-list">
+                {% if page_obj.has_previous %}
+                <li>
+                    <a href="?page={{ page_obj.previous_page_number }}{% for k, v in request.GET.items %}{% if k != 'page' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </a>
+                </li>
+                {% endif %}
+                
+                {% for num in page_obj.paginator.page_range %}
+                    {% if num == page_obj.number %}
+                    <li class="active"><span>{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li>
+                        <a href="?page={{ num }}{% for k, v in request.GET.items %}{% if k != 'page' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if page_obj.has_next %}
+                <li>
+                    <a href="?page={{ page_obj.next_page_number }}{% for k, v in request.GET.items %}{% if k != 'page' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+        {% else %}
+        <!-- Empty State -->
+        <div class="empty-state">
+            <i class="fa-solid fa-box-open"></i>
+            <h2>Товары не найдены</h2>
+            <p>Попробуйте изменить параметры фильтрации</p>
+            <a href="{% url 'catalog:catalog' %}" class="btn-primary">Сбросить фильтры</a>
+        </div>
+        {% endif %}
+
+    </main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function applyPriceFilter() {
+    const minPrice = document.querySelector('input[name="min_price"]').value;
+    const maxPrice = document.querySelector('input[name="max_price"]').value;
+    
+    let url = new URL(window.location.href);
+    if (minPrice) url.searchParams.set('min_price', minPrice);
+    if (maxPrice) url.searchParams.set('max_price', maxPrice);
+    
+    window.location.href = url.toString();
+}
+
+function applyOrderFilter(order) {
+    let url = new URL(window.location.href);
+    url.searchParams.set('order', order);
+    window.location.href = url.toString();
+}
+
+function addToCart(productId) {
+    fetch('{% url "cart:add" 0 %}'.replace('0', productId), {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('cartCount').textContent = data.cart_count;
+            // Show toast notification
+            showToast('Товар добавлен в корзину');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function showToast(message) {
+    // Implement toast notification
+    alert(message); // Simple fallback
+}
+</script>
+{% endblock %}

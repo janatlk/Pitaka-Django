@@ -1,0 +1,421 @@
+{# ============================================
+   MEGA MENU TEMPLATE
+   Purpose: Complete mega menu structure with all sections
+   Usage: {% include 'includes/mega_menu.html' %}
+   ============================================ #}
+
+{% load static %}
+
+<!-- MEGA MENU -->
+<div class="mega" id="megaMenu">
+    <div class="mega-inner">
+
+        {# ================= PHONE SECTION ================= #}
+        <div class="mega-section active" data-menu="phone">
+            <div class="mega-left">
+                <p class="mega-tab active" data-tab="devices">По устройствам</p>
+                <p class="mega-tab" data-tab="series">По сериям</p>
+                <p class="mega-tab" data-tab="style">По стилю</p>
+            </div>
+
+            {# Devices Tab #}
+            <div class="mega-content active" id="devices">
+                {# iPhone Column #}
+                <div class="mega-col">
+                    <h4>Чехлы для iPhone</h4>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-17-pro-max' %}">
+                        iPhone 17 Pro Max <span class="badge-new">NEW</span>
+                    </a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-17-pro' %}">
+                        iPhone 17 Pro <span class="badge-new">NEW</span>
+                    </a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-air' %}">
+                        iPhone Air <span class="badge-new">NEW</span>
+                    </a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-17' %}">
+                        iPhone 17 <span class="badge-new">NEW</span>
+                    </a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-16-pro-max' %}">
+                        iPhone 16 Pro Max
+                    </a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-16-pro' %}">
+                        iPhone 16 Pro
+                    </a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-16-plus' %}">iPhone 16 Plus</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-16' %}">iPhone 16</a>
+                </div>
+
+                {# Samsung Column #}
+                <div class="mega-col">
+                    <h4>Чехлы для Samsung</h4>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-s26-ultra' %}">
+                        Galaxy S26 Ultra <span class="badge-new">NEW</span>
+                    </a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-s26-plus' %}">
+                        Galaxy S26 Plus <span class="badge-new">NEW</span>
+                    </a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-s26' %}">
+                        Galaxy S26 <span class="badge-new">NEW</span>
+                    </a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-z-fold7' %}">Galaxy Z Fold 7</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-z-flip7' %}">Galaxy Z Flip 7</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-s25-ultra' %}">Galaxy S25 Ultra</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-s25-plus' %}">Galaxy S25 Plus</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-s25' %}">Galaxy S25</a>
+                </div>
+
+                {# Google Pixel Column #}
+                <div class="mega-col">
+                    <h4>Чехлы для Google Pixel</h4>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'pixel' 'pixel-10-pro-xl' %}">Pixel 10 Pro XL</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'pixel' 'pixel-10-pro' %}">Pixel 10 Pro</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'pixel' 'pixel-10' %}">Pixel 10</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'pixel' 'pixel-9-pro-fold' %}">Pixel 9 Pro Fold</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'pixel' 'pixel-9-pro-xl' %}">Pixel 9 Pro XL</a>
+                </div>
+            </div>
+
+            {# Series Tab #}
+            <div class="mega-content" id="series">
+                <div class="series-grid">
+                    <div class="series-card">
+                        <img src="{% static 'images/menu-edge.webp' %}" alt="UltraGuard">
+                        <h4>UltraGuard</h4>
+                        <p>Искусство минимализма.</p>
+                    </div>
+                    <div class="series-card">
+                        <img src="{% static 'images/menu-cairn.jpg' %}" alt="ProGuard">
+                        <h4>ProGuard</h4>
+                        <p>Путь надёжной защиты.</p>
+                    </div>
+                    <div class="series-card">
+                        <img src="{% static 'images/menu-summa.webp' %}" alt="Ultra-Slim">
+                        <h4>Ultra-Slim</h4>
+                        <p>Совершенство мастерства.</p>
+                    </div>
+                </div>
+            </div>
+
+            {# Style Tab #}
+            <div class="mega-content" id="style">
+                <div class="style-left">
+                    <p class="style-link active" data-style="moment">Момент</p>
+                    <p class="style-link" data-style="essential">Основные</p>
+                    <p class="style-link" data-style="collaboration">Коллаборации</p>
+                </div>
+
+                <div class="style-content">
+                    {# Moment Style #}
+                    <div class="style-grid active" data-style="moment">
+                        <div class="product-card framed">
+                            <img src="{% static 'images/menu-glints-of-gold.avif' %}" alt="Glints of Gold">
+                            <p class="product-title">Glints of Gold</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'images/menu-sunset.avif' %}" alt="Sunset">
+                            <p class="product-title">Sunset</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'images/menu-moonrise.avif' %}" alt="Moonrise">
+                            <p class="product-title">Moonrise</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'images/menu-over-the-horizon.avif' %}" alt="Over the horizon">
+                            <p class="product-title">Over the horizon</p>
+                        </div>
+                        <div class="product-card framed more-card">
+                            <p>Ещё &gt;</p>
+                        </div>
+                    </div>
+
+                    {# Essential Style #}
+                    <div class="style-grid" data-style="essential">
+                        <div class="product-card framed">
+                            <img src="{% static 'images/menu-pitaka-monogram.avif' %}" alt="PITAKA Monogram">
+                            <p class="product-title">PITAKA Monogram</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'images/menu-black-grey.avif' %}" alt="Black/Grey">
+                            <p class="product-title">Black/Grey</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'images/menu-black-blue.avif' %}" alt="Black/Blue">
+                            <p class="product-title">Black/Blue</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'images/menu-forest-green.avif' %}" alt="Forest Green">
+                            <p class="product-title">Forest Green</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'images/menu-ocean-blue.avif' %}" alt="Ocean Blue">
+                            <p class="product-title">Ocean Blue</p>
+                        </div>
+                        <div class="product-card framed more-card">
+                            <p>Ещё &gt;</p>
+                        </div>
+                    </div>
+
+                    {# Collaboration Style #}
+                    <div class="style-grid" data-style="collaboration">
+                        <div class="product-card framed">
+                            <img src="{% static 'images/menu-aries.avif' %}" alt="Aries">
+                            <p class="product-title">PITAKA | Aries | No Problemo</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'images/menu-re-tros.avif' %}" alt="Re-Tros">
+                            <p class="product-title">PITAKA | △</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'images-menu-another.avif' %}" alt="Another">
+                            <p class="product-title">PITAKA | KIE</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'images/menu-awa.avif' %}" alt="AWA">
+                            <p class="product-title">PITAKA | AWA</p>
+                        </div>
+                        <div class="product-card framed more-card">
+                            <p>Ещё &gt;</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# ================= TABLET SECTION ================= #}
+        <div class="mega-section" data-menu="tablet">
+            <div class="mega-left">
+                <p class="mega-tab active" data-tab="tablet-devices">По устройствам</p>
+                <p class="mega-tab" data-tab="tablet-types">По типу продукта</p>
+            </div>
+
+            {# Devices Tab #}
+            <div class="mega-content active" id="tablet-devices">
+                <div class="mega-col">
+                    <h4>iPad Pro</h4>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-pro-13-m5' %}">iPad Pro 13″ (M5)</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-pro-11-m5' %}">iPad Pro 11″ (M5)</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-pro-13-m4' %}">iPad Pro 13″ (M4)</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-pro-11-m4' %}">iPad Pro 11″ (M4)</a>
+                </div>
+
+                <div class="mega-col">
+                    <h4>iPad Air</h4>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-air-13' %}">iPad Air 13″</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-air-11' %}">iPad Air 11″</a>
+                </div>
+
+                <div class="mega-col">
+                    <h4>iPad Mini</h4>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-mini-7' %}">iPad mini 7</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-mini-6' %}">iPad mini 6</a>
+                </div>
+
+                <div class="mega-col">
+                    <h4>iPad</h4>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-a16' %}">iPad (A16)</a>
+                    <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-10' %}">iPad (10-е поколение)</a>
+                </div>
+            </div>
+
+            {# Types Tab #}
+            <div class="mega-content" id="tablet-types">
+                <div class="mega-col">
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?type=ultraslim">Ультратонкие чехлы</a>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?type=stand">Чехлы с подставкой</a>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?type=keyboard">Чехлы с клавиатурой</a>
+                </div>
+            </div>
+        </div>
+
+        {# ================= WATCH & AIRPODS SECTION ================= #}
+        <div class="mega-section" data-menu="watch">
+            <div class="watch-left">
+                <p class="watch-link active" data-watch="bands">Ремешки из карбона</p>
+                <p class="watch-link" data-watch="aramid">Чехлы из арамидного волокна</p>
+                <p class="watch-link" data-watch="airpods">Чехлы для AirPods <span class="new">NEW</span></p>
+            </div>
+
+            <div class="watch-content">
+                {# Bands Grid #}
+                <div class="watch-grid active" data-watch="bands">
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-watchband-modern.avif' %}" alt="Modern">
+                        <p class="product-title">Modern</p>
+                        <span>(Для Apple Watch)</span>
+                    </div>
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-watchband-moon.avif' %}" alt="Moon">
+                        <p class="product-title">Moon</p>
+                        <span>(Для Apple Watch)</span>
+                    </div>
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-watchband-mosaic.avif' %}" alt="Mosaic">
+                        <p class="product-title">Mosaic</p>
+                        <span>(Для Apple Watch)</span>
+                    </div>
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-watchband-stairs.avif' %}" alt="Stairs">
+                        <p class="product-title">Stairs</p>
+                        <span>(Для Apple Watch)</span>
+                    </div>
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-watchband-rhapsody.avif' %}" alt="Rhapsody">
+                        <p class="product-title">Rhapsody</p>
+                        <span>(Для Apple Watch)</span>
+                    </div>
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-watchband-galaxy.avif' %}" alt="Galaxy">
+                        <p class="product-title">Modern</p>
+                        <span>(Для Galaxy Watch)</span>
+                    </div>
+                </div>
+
+                {# Aramid Grid #}
+                <div class="watch-grid" data-watch="aramid">
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-watchcase-ultra.avif' %}" alt="Watch Ultra">
+                        <p class="product-title">For Apple Watch Ultra 3 / Ultra 2 / Ultra</p>
+                    </div>
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-watchcase-series1110.avif' %}" alt="Watch Series">
+                        <p class="product-title">For Apple Watch Series 11 / 10</p>
+                    </div>
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-watchcase-series789.avif' %}" alt="Watch Series 789">
+                        <p class="product-title">For Apple Watch Series 7 / 8 / 9</p>
+                    </div>
+                </div>
+
+                {# AirPods Grid #}
+                <div class="watch-grid" data-watch="airpods">
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-airpodspro3-case.avif' %}" alt="AirPods Pro 3">
+                        <p class="product-title">AirPods Pro 3 <span class="new">NEW</span></p>
+                    </div>
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-airpodspro2-case.avif' %}" alt="AirPods Pro 2">
+                        <p class="product-title">AirPods Pro 2</p>
+                    </div>
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-airpodspro-case.avif' %}" alt="AirPods Pro">
+                        <p class="product-title">AirPods Pro</p>
+                    </div>
+                    <div class="product-card">
+                        <img src="{% static 'images/menu-airpods4-case.avif' %}" alt="AirPods 4">
+                        <p class="product-title">AirPods 4</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# ================= MAGSAFE SECTION ================= #}
+        <div class="mega-section" data-menu="magsafe">
+            <div class="watch-left">
+                <p class="watch-link active" data-watch="wallets">Кардхолдер</p>
+                <p class="watch-link" data-watch="powerbanks">Повербанк</p>
+                <p class="watch-link" data-watch="mounts">Держатели и кольца</p>
+            </div>
+
+            <div class="watch-content">
+                {# Wallets Grid #}
+                <div class="watch-grid active" data-watch="wallets">
+                    <div class="product-card framed">
+                        <img src="{% static 'images/menu-wallet-bgt.avif' %}" alt="Black/Grey Twill">
+                        <p class="product-title">Black/Grey (Twill)</p>
+                    </div>
+                    <div class="product-card framed">
+                        <img src="{% static 'images/menu-wallet-sunset.avif' %}" alt="Sunset Wallet">
+                        <p class="product-title">Sunset</p>
+                    </div>
+                    <div class="product-card framed">
+                        <img src="{% static 'images/menu-wallet-moonrise.avif' %}" alt="Moonrise Wallet">
+                        <p class="product-title">Moonrise</p>
+                    </div>
+                </div>
+
+                {# Power Banks Grid #}
+                <div class="watch-grid" data-watch="powerbanks">
+                    <div class="product-card framed">
+                        <img src="{% static 'images/menu-powerbank-bgt.avif' %}" alt="Power Bank Black/Grey">
+                        <p class="product-title">Black/Grey (Twill)</p>
+                    </div>
+                    <div class="product-card framed">
+                        <img src="{% static 'images/menu-powerbank-sunset.avif' %}" alt="Power Bank Sunset">
+                        <p class="product-title">Sunset</p>
+                    </div>
+                    <div class="product-card framed">
+                        <img src="{% static 'images/menu-powerbank-moonrise.avif' %}" alt="Power Bank Moonrise">
+                        <p class="product-title">Moonrise</p>
+                    </div>
+                </div>
+
+                {# Mounts Grid #}
+                <div class="watch-grid" data-watch="mounts">
+                    <div class="product-card framed">
+                        <img src="{% static 'images/menu-car-mount.avif' %}" alt="Car Mount">
+                        <p class="product-title">Автодержатель</p>
+                    </div>
+                    <div class="product-card framed">
+                        <img src="{% static 'images/menu-grip.avif' %}" alt="MagEZ Grip">
+                        <p class="product-title">Магнитное кольцо</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# ================= ACCESSORIES SECTION ================= #}
+        <div class="mega-section" data-menu="accessories">
+            <div class="mega-left">
+                <p class="mega-tab active" data-tab="acc-categories">По категориям</p>
+                <p class="mega-tab" data-tab="acc-styles">По стилю</p>
+            </div>
+
+            <div class="mega-content active" id="acc-categories">
+                <div class="mega-col">
+                    <h4>Зарядные устройства</h4>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?category=charger">MagSafe Charger</a>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?category=wireless-charger">Wireless Charger</a>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?category=charging-dock">Charging Dock</a>
+                </div>
+
+                <div class="mega-col">
+                    <h4>Держатели</h4>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?category=grip">MagEZ Grip</a>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?category=phone-grip">Phone Grip</a>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?category=ring-holder">Ring Holder</a>
+                </div>
+
+                <div class="mega-col">
+                    <h4>Кошельки</h4>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?category=wallet">Magnetic Wallet</a>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?category=woven-wallet">Magnetic Woven Wallet</a>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?category=card-holder">Card Holder</a>
+                </div>
+
+                <div class="mega-col">
+                    <h4>Ремешки</h4>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?category=phone-strap">Phone Strap</a>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?category=lanyard">Lanyard</a>
+                </div>
+            </div>
+
+            <div class="mega-content" id="acc-styles">
+                <div class="style-grid active" data-style="acc-moment">
+                    <div class="product-card framed">
+                        <img src="{% static 'images/menu-wallet-sunset.avif' %}" alt="Sunset">
+                        <p class="product-title">Sunset</p>
+                    </div>
+                    <div class="product-card framed">
+                        <img src="{% static 'images/menu-wallet-moonrise.avif' %}" alt="Moonrise">
+                        <p class="product-title">Moonrise</p>
+                    </div>
+                    <div class="product-card framed">
+                        <img src="{% static 'images/menu-wallet-bgt.avif' %}" alt="Black/Grey">
+                        <p class="product-title">Black/Grey</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

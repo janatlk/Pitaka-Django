@@ -1,0 +1,1354 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Sunset</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* ===== РАЗМЕТКА СТРАНИЦЫ ===== */
+.product-page {
+  max-width: 1400px;
+  margin: auto;
+  padding: 40px 30px;
+}
+
+/* ===== ВЕРХНИЙ БЛОК ТОВАРА ===== */
+.product-top {
+  display: grid;
+  grid-template-columns: 90px 1fr 420px;
+  gap: 40px;
+}
+
+/* ===== МИНИАТЮРЫ ===== */
+.thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 10;
+}
+
+
+.thumbs img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background: #f3f3f3;
+  padding: 6px;
+}
+
+.thumbs img.active {
+  border: 2px solid #000;
+}
+
+/* ===== ОСНОВНОЕ ФОТО ===== */
+.main-image {
+  background: #e7e5e2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 520px;
+}
+
+.main-image img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+/* ===== ИНФОРМАЦИЯ О ТОВАРЕ ===== */
+.product-info h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.badge {
+  display: inline-block;
+  background: #e88b52;
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.info-block {
+  margin-bottom: 18px;
+}
+
+.label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.select,
+input,
+select {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 100%;
+}
+
+.case-type {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  padding: 6px 14px;
+  font-size: 14px;
+}
+
+.order-btn {
+  margin-top: 20px;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* ===== СЕКЦИИ ===== */
+.section {
+  margin-top: 100px;
+}
+
+.section-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.section img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.section h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.section p {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* ===== БАННЕР ===== */
+.full-banner {
+  margin-top: 120px;
+}
+
+.full-banner img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+/* ===== РЕКОМЕНДАЦИИ ===== */
+.best-title {
+  margin-top: 120px;
+  font-size: 32px;
+}
+
+.best-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.best-card img {
+  width: 100%;
+  background: #f1f1f1;
+}
+
+.best-card p {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* ===== БЛОК ИЗ 4 КАРТИНОК ===== */
+.features-grid {
+  margin-top: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.features-grid img {
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+@media(max-width: 1100px) {
+  .product-top {
+    grid-template-columns: 1fr;
+  }
+
+  .thumbs {
+    flex-direction: row;
+  }
+
+  .section-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .best-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* ================= FAQ ================= */
+.faq-section {
+  margin-top: 140px;
+  width: 100%;
+}
+
+.faq-title {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.faq-item {
+  border-top: 1px solid #bbb;
+}
+
+.faq-question {
+  padding: 22px 0;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-question span {
+  font-size: 24px;
+  transition: 0.3s;
+}
+
+.faq-item.active .faq-question span {
+  transform: rotate(90deg);
+}
+
+.faq-answer {
+  display: none;
+  padding-bottom: 25px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+/* ================= FULL WIDTH FOOTER ================= */
+.site-footer {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background: #0f0f0f;
+  color: #fff;
+  margin-top: 160px;
+}
+
+/* top subscribe */
+.footer-subscribe {
+  text-align: center;
+  padding: 40px 20px 25px;
+}
+
+.footer-subscribe input {
+  background: transparent;
+  border: 1px solid #555;
+  color: #fff;
+  padding: 12px 16px;
+  width: 300px;
+}
+
+/* icons row */
+.footer-icons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  padding: 60px 40px;
+  border-bottom: 1px solid #333;
+  font-size: 14px;
+}
+
+/* links */
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 40px;
+  padding: 60px 40px;
+  font-size: 14px;
+}
+
+.footer-links h4 {
+  margin-bottom: 15px;
+}
+
+.footer-links p {
+  margin: 6px 0;
+  opacity: 0.8;
+}
+
+/* bottom */
+.footer-bottom {
+  border-top: 1px solid #333;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.main-image {
+  position: relative;
+}
+
+.main-image img {
+  max-width: 90%;
+  max-height: 90%;
+  z-index: 1;
+}
+.photo-colors {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.photo-color-name {
+  font-size: 13px;
+  color: #111;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+
+.photo-color {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(0,0,0,0.3);
+}
+
+.photo-color.active {
+  border-color: #000;
+}
+
+/* ================= PRODUCT COMPARISON ================= */
+
+.comparison{
+  margin-top:160px;
+}
+
+.comparison-title{
+  font-size:46px;
+  margin-bottom:30px;
+}
+
+/* линия после заголовка */
+.comparison-title::after{
+  content:"";
+  display:block;
+  margin-top:25px;
+  border-bottom:1px solid #bfbfbf;
+}
+
+/* HEADER */
+.comparison-head{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  text-align:center;
+  padding:40px 0;
+}
+
+.comparison-head h3{
+  font-size:22px;
+  margin-bottom:6px;
+}
+
+.comparison-head p{
+  font-size:14px;
+  color:#888;
+}
+
+/* ROWS */
+.comparison-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  align-items:center;
+  text-align:center;
+  padding:50px 0;
+  border-top:1px solid #bfbfbf;
+}
+
+/* IMAGES */
+/* ===== CAMERA BUTTON ROW ===== */
+
+.image-row img{
+  width:160px;
+  height:auto;
+  object-fit:contain;
+
+}
+
+.image-row{
+  padding:70px 0;
+}
+
+/* ===== PROTECTION ICONS ===== */
+
+.image-row svg,
+.image-row img[src*="protection"]{
+  width:120px;
+  height:auto;
+}
+
+.image-row p{
+  margin-top:14px;
+  line-height:1.4;
+}
+
+.image-row small{
+  margin-top:4px;
+  display:block;
+  color:#777;
+  font-size:13px;
+}
+
+/* TEXT */
+.comparison-row div{
+  font-size:18px;
+}
+
+
+
+.comparison-note{
+  text-align:center;
+  margin-top:40px;
+  font-size:14px;
+  color:#777;
+}
+/* ===== ADD-ONS LIKE PITAKA ===== */
+
+.extras-box {
+  margin: 25px 0;
+}
+
+.extra-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+.extra-row input {
+  width: 18px;
+  height: 18px;
+}
+
+.extra-row img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.extra-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.extra-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+}
+
+.extra-variant {
+  font-size: 13px;
+  color: #7a7a7a;
+  margin: 2px 0 4px;
+}
+
+.extra-price {
+  font-size: 14px;
+}
+
+.price-new {
+  color: #e53935;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.price-old {
+  color: #9e9e9e;
+  text-decoration: line-through;
+  font-size: 13px;
+}
+
+
+/* ===== КНОПКА ПОДРОБНЕЕ ===== */
+
+.comparison-more{
+  text-align:center;
+  margin-top:40px;
+}
+
+.comparison-btn{
+  display:inline-block;
+  padding:12px 28px;
+  border:1px solid #888;
+  border-radius:30px;
+  font-size:16px;
+  text-decoration:none;
+  color:#111;
+  transition:0.25s;
+}
+
+.comparison-btn:hover{
+  background:#111;
+  color:#fff;
+}
+
+/* ТЕКСТ ПРИМЕЧАНИЯ */
+
+.comparison-note{
+  margin-top:30px;
+  color:#8a8a8a;
+  font-size:15px;
+  line-height:1.6;
+}
+
+/* НИЖНЯЯ ЛИНИЯ */
+
+.comparison-divider{
+  margin-top:50px;
+  border-top:1px solid #bbb;
+}
+#comparisonHidden{
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- МЕНЮ -->
+<div id="menu"></div>
+
+<main class="product-page">
+
+<!-- ================= ВЕРХ ТОВАРА ================= -->
+<div class="product-top">
+
+  <!-- Миниатюры -->
+  <div class="thumbs">
+    <img src="{% static 'pitaka/images/webp/sunset-i16-pro-pitatap-1_1024x1024.webp' %}"> class="active">
+    <img src="{% static 'pitaka/images/webp/sunset-i16-pro-pitatap-2_1024x1024.webp' %}">>
+    <img src="{% static 'pitaka/images/webp/sunset-i16-pro-pitatap-3_1024x1024.webp' %}">>
+    <img src="{% static 'pitaka/images/webp/sunset-i16-pro-pitatap-4_1024x1024.webp' %}">>
+    <img src="{% static 'pitaka/images/webp/sunset-i16-pro-pitatap-6_1024x1024.webp' %}">>
+  </div>
+
+  
+
+  <!-- Основное изображение -->
+<div class="main-image">
+
+
+  <img id="mainPhoto"
+       src="sunset-i16-pro-pitatap-1_1024x1024.webp">
+
+</div>
+
+
+  <!-- Информация -->
+  <div class="product-info">
+
+    <div class="badge">Пошлины и налоги включены</div>
+
+    <h1 id="productName">Moment · Sunset (PitaTap™)</h1>
+
+    <div class="price">$<span id="price">69.99</span></div>
+
+    <div class="info-block">
+      <div class="label">Модель устройства</div>
+      <select id="model">
+        <option>iPhone 16 Pro Max</option>
+        <option>iPhone 17 Pro</option>
+        <option>iPhone 17 Pro Max</option>
+        <option>iPhone 16 Pro</option>
+      </select>
+    </div>
+
+    <div class="info-block">
+      <div class="label">Тип чехла</div>
+      <div class="case-type" id="category">Ultra-slim</div>
+    </div>
+
+  
+
+    <div class="info-block">
+      <div class="label">Количество</div>
+      <input type="number" id="qty" value="1" min="1">
+    </div>
+
+
+<!-- ===== ДОБАВИТЬ К ЗАКАЗУ ===== -->
+<div class="extras-box">
+
+  <div class="extra-row">
+    <input type="checkbox" class="extra"
+           data-name="MagEZ Grip (Sunset / Grip 3)"
+           data-price="19.99">
+
+    <img src="{% static 'pitaka/images/webp/grip3-sunset-3_300x@2x.webp' %}"> alt="MagEZ Grip">
+
+    <div class="extra-info">
+      <div class="extra-title">MagEZ Grip (Sale)</div>
+      <div class="extra-variant">Sunset / Grip 3</div>
+      <div class="extra-price">
+        <span class="price-new">$19.99</span>
+        <span class="price-old">$24.99</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="extra-row">
+    <input type="checkbox" class="extra"
+           data-name="Magnetic Woven Wallet (Sunset)"
+           data-price="34.99">
+
+    <img src="{% static 'pitaka/images/webp/wallet-sun-2_f19fdf40-c09a-4f6f-b6e0-a26d4930ff7f_300x@2x.webp' %}"> alt="Wallet">
+
+    <div class="extra-info">
+      <div class="extra-title">Magnetic Woven Wallet (Sale)</div>
+      <div class="extra-variant">Sunset</div>
+      <div class="extra-price">
+        <span class="price-new">$34.99</span>
+        <span class="price-old">$39.99</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="extra-row">
+    <input type="checkbox" class="extra"
+           data-name="Aramid Fiber Magnetic Power Bank (Sunset)"
+           data-price="59.99">
+
+    <img src="{% static 'pitaka/images/webp/bank-sun-1_300x@2x.webp' %}"> alt="Power Bank">
+
+    <div class="extra-info">
+      <div class="extra-title">Aramid Fiber Magnetic Power Bank (Sale)</div>
+      <div class="extra-variant">Sunset</div>
+      <div class="extra-price">
+        <span class="price-new">$59.99</span>
+        <span class="price-old">$69.99</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+    <button class="order-btn" onclick="sendOrder()">Заказать</button>
+
+  </div>
+</div>
+
+<!-- ================= БАННЕР ================= -->
+<div class="full-banner">
+  <img src="{% static 'pitaka/images/webp/sunset-iphone17-section1.webp' %}">>
+</div>
+
+<!-- ================= СЕКЦИЯ 1 ================= -->
+<div class="section">
+  <div class="section-grid">
+    <div>
+      <h2>Выше к вершинам. </h2>
+        <h2>Ближе к звёздам.</h2>
+      <p>
+        Оглядываясь на путь нашей жизни, мы понимаем: она состоит из мгновений. Серия Weaving+ Moment, созданная из премиального арамидного волокна, запечатлевает эти чарующие моменты на чехлах.
+      </p>
+    </div>
+    <img src="{% static 'pitaka/images/webp/sunset-iphone17-section2.webp' %}">>
+  </div>
+</div>
+
+<!-- ================= СЕКЦИЯ 2 ================= -->
+<div class="section">
+  <div class="section-grid">
+    <img src="{% static 'pitaka/images/webp/sunset-iphone17-section3-1.webp' %}">>
+    <div>
+      <h2>Премиальное плетение</h2>
+       <p> Чехол изготовлен из тонко переплетённого арамидного волокна
+и дарит шелковисто-гладкую, по-настоящему роскошную текстуру,
+которую приятно ощущать в руке.</p>
+      <p>
+        Он не просто лёгкий и прочный —
+его приятно держать каждый раз.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================= СЕКЦИЯ 3 ================= -->
+<div class="section">
+  <div class="section-grid">
+    <img src="sunset-iphone17-section3-2.webp     ">
+    <div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- ================= СЕКЦИЯ 4 ================= -->
+<div class="section">
+  <div class="section-grid">
+    <div>
+      <h2>PitaTap™ </h2>
+      <p>
+       Чехол толщиной менее 1 мм защищает кнопку управления камерой с помощью арамидного волокна, а скрытый ёмкостный слой позволяет легко нажимать и проводить пальцем.
+       Бесшовная интеграция сохраняет текстуру арамида, обеспечивая точное и мгновенное управление.
+      </p>
+    </div>
+    <img src="{% static 'pitaka/images/webp/sunset-iphone17-section5.webp' %}">>
+  </div>
+</div>
+
+<!-- ================= СЕКЦИЯ 5 ================= -->
+<div class="section">
+  <div class="section-grid">
+    <img src="{% static 'pitaka/images/webp/sunset-iphone17-section4.webp' %}">>
+    <div>
+      <h2>Тонкий как бумага и лёгкий как перо</h2>
+       <p>Элегантный, почти незаметный профиль сохраняет естественные ощущения от смартфона. Идеально подойдёт минималистам, которые ценят изящную защиту без лишнего веса.</p>
+      <h1>Вес:≈ 20 г    Толщина:≈ 0,99 мм </h1>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- ================= PRODUCT COMPARISON ================= -->
+<!-- ================= PRODUCT COMPARISON ================= -->
+<section class="comparison">
+
+<h2 class="comparison-title">Сравнение чехлов</h2>
+
+<!-- HEAD -->
+<div class="comparison-head">
+  <div>
+    <h3>Ultra-Slim</h3>
+    <p>Минимализм и лёгкость</p>
+  </div>
+
+  <div>
+    <h3>ProGuard</h3>
+    <p>Максимальная защита</p>
+  </div>
+
+  <div>
+    <h3>UltraGuard</h3>
+    <p>Баланс дизайна и прочности</p>
+  </div>
+</div>
+
+<!-- IMAGES -->
+<div class="comparison-row image-row">
+  <img src="{% static 'pitaka/images/compare-cases-sunset-iphone17-slim.avif' %}">>
+  <img src="{% static 'pitaka/images/compare-cases-sunset-iphone17-proguard.avif' %}">>
+  <img src="{% static 'pitaka/images/compare-cases-sunset-iphone17-ultraguard.avif' %}">>
+</div>
+
+<!-- FEATURES -->
+<div class="comparison-row">
+  <div>Невероятно тонкий и лёгкий</div>
+  <div>Защита от падений</div>
+  <div>Элегантный цельный дизайн</div>
+</div>
+
+<!-- WEIGHT -->
+<div class="comparison-row">
+  <div>
+    Вес<br>
+    ≈ 20 г
+  </div>
+
+  <div>
+    Вес<br>
+    ≈ 35 г
+  </div>
+
+  <div>
+    Вес<br>
+    ≈ 35 г
+  </div>
+</div>
+
+<!-- THICKNESS -->
+<div class="comparison-row">
+  <div>
+    Толщина<br>
+    ≈ 0.99 мм
+  </div>
+
+  <div>
+    Толщина<br>
+    ≈ 2 мм
+  </div>
+
+  <div>
+    Толщина<br>
+    ≈ 2 мм
+  </div>
+</div>
+
+<!-- CAMERA CONTROL -->
+<div class="comparison-row image-row">
+
+  <div>
+    <img src="{% static 'pitaka/images/webp/compare-cases-sunset-button-pitatap.webp' %}">>
+    <p>
+      PitaTap™<br>
+      <small>Управление камерой из арамидного волокна</small>
+    </p>
+  </div>
+
+  <div>
+    <img src="{% static 'pitaka/images/webp/compare-cases-sunset-button-pitatap-coverage.webp' %}">>
+    <p>
+      Полное покрытие кнопки<br>
+      <small>Ультратонкая точная форма</small>
+    </p>
+  </div>
+
+  <div>
+    <img src="{% static 'pitaka/images/webp/compare-cases-sunset-button-pitatap-physical.webp' %}">>
+    <p>
+      Усиленное стекло<br>
+      управления камерой
+    </p>
+  </div>
+
+</div>
+
+<!-- CORNER PROTECTION -->
+<div class="comparison-row image-row">
+
+  <div>
+    <img src="{% static 'pitaka/images/svg/compare-cases-protection-daily.svg' %}">>
+    <p>Базовая защита</p>
+  </div>
+
+  <div>
+    <img src="{% static 'pitaka/images/svg/compare-cases-protection-bow.svg' %}">>
+    <p>
+      Арочная защита углов<br>
+      <small>MIL-STD-810H · падение 2.44 м</small>
+    </p>
+  </div>
+
+  <div>
+    <img src="{% static 'pitaka/images/svg/compare-cases-protection-ultra.svg' %}">>
+    <p>
+      Цельный премиальный корпус<br>
+      <small>MIL-STD-810H · падение 1.22 м</small>
+    </p>
+  </div>
+
+</div>
+
+<div class="comparison-divider"></div>
+
+<!-- СКРЫТАЯ ЧАСТЬ -->
+<div id="comparisonHidden">
+
+<div class="comparison-row">
+  <div>Арамидное волокно</div>
+  <div>Арамидное волокно, TPU</div>
+  <div>Арамидное волокно, TPU, Orca Resin</div>
+</div>
+
+<div class="comparison-row image-row">
+
+  <div>
+    <img src="{% static 'pitaka/images/svg/compare-cases-camera-iphone.svg' %}">>
+    <p>Приподнятая рамка камеры</p>
+  </div>
+
+  <div>
+    <img src="{% static 'pitaka/images/svg/compare-cases-camera-iphone.svg' %}">>
+    <p>Приподнятая рамка камеры</p>
+  </div>
+
+  <div>
+    <img src="{% static 'pitaka/images/svg/compare-cases-camera-iphone.svg' %}">>
+    <p>Приподнятая рамка камеры</p>
+  </div>
+
+</div>
+
+<div class="comparison-row image-row">
+
+  <div>
+    <img src="{% static 'pitaka/images/svg/compare-cases-bezel-ultraslim.svg' %}">>
+    <p>Тонкая рамка<br>≈ 0.3 мм</p>
+  </div>
+
+  <div>
+    <img src="{% static 'pitaka/images/svg/compare-cases-bezel-proguard.svg' %}">>
+    <p>Приподнятая рамка<br>≈ 1.5 мм</p>
+  </div>
+
+  <div>
+    <img src="{% static 'pitaka/images/svg/compare-cases-bezel-ultraguard.svg' %}">>
+    <p>Приподнятая рамка<br>≈ 1 мм</p>
+  </div>
+
+</div>
+
+<div class="comparison-row image-row">
+
+  <div>
+    <img src="{% static 'pitaka/images/svg/compare-cases-magsafe-compatible.svg' %}">>
+    <p>Совместим с MagSafe</p>
+  </div>
+
+  <div>
+    <img src="{% static 'pitaka/images/svg/compare-cases-magsafe-compatible.svg' %}">>
+    <p>Совместим с MagSafe</p>
+  </div>
+
+  <div>
+    <img src="{% static 'pitaka/images/svg/compare-cases-magsafe-compatible.svg' %}">>
+    <p>Совместим с MagSafe</p>
+  </div>
+
+</div>
+
+</div>
+
+<!-- КНОПКА В САМОМ КОНЦЕ -->
+<div class="comparison-more">
+  <button id="toggleComparison">Смотреть больше информации</button>
+</div>
+
+<p class="comparison-note">
+Примечание: данные получены в лаборатории PITAKA при тестировании чехла для iPhone 17.<br>
+Фактические значения могут немного отличаться в зависимости от модели устройства.
+</p>
+
+<div class="comparison-divider"></div>
+
+
+<!-- ================= РЕКОМЕНДАЦИИ ================= -->
+<h2 class="best-title">Рекомендуем</h2>
+
+<div class="best-grid">
+  <div class="best-card">
+    <img src="{% static 'pitaka/images/webp/bank-sun-1_500x500.webp' %}">>
+    <p>Магнитный Power Bank</p>
+  </div>
+
+  <div class="best-card">
+    <img src="{% static 'pitaka/images/menu-wallet-sunset.avif' %}">>
+    <p>Магнитный кошелёк</p>
+  </div>
+
+  <div class="best-card">
+    <img src="{% static 'pitaka/images/webp/grip3-sunset-3_500x500.webp' %}">>
+    <p>Держатель MagEZ Grip</p>
+  </div>
+
+  <div class="best-card">
+    <img src="{% static 'pitaka/images/webp/phone-strap-black-1_500x500.webp' %}">>
+    <p>Чехол для AirPods Pro</p>
+  </div>
+</div>
+
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq-section">
+
+<h2 class="faq-title">Часто задаваемые вопросы </h2>
+
+<div class="faq-item">
+  <div class="faq-question">  Что случилось с чехлами Ultra-Slim, ProGuard и UltraGuard? <span>›</span></div>
+  <div class="faq-answer">
+ Мы обновили нашу серию чехлов.
+Названия UltraSlim, ProGuard и UltraGuard помогали описать особенности, но со временем они также вызывали путаницу.
+В PITAKA мы всегда уделяли особое внимание совершенствованию технологии плетения арамидного волокна, чтобы улучшить повседневную носку. По мере развития наших продуктов мы хотели, чтобы их названия отражали не только технические характеристики, но и опыт использования. Поэтому мы переименовали три серии в Cairn, Edge и Summa, вдохновившись путешествием по скалам:
+ Edge: тонкий, легкий и острый, как скала (первоначальное название: чехол UltraSlim)
+ Cairn: прочный и надежный, как каменные ориентиры, указывающие путь (первоначальное название: ProGuard Case)
+ Summa: вершина, где сочетаются защита и удобство в руке (первоначальное название: UltraGuard Case)
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">В чем отличия от чехлов для iPhone 16 серии? <span>›</span></div>
+  <div class="faq-answer">
+   Кнопка управления камерой открытого типа была модернизирована до PitaTap™ (скоро будет доступна для iPhone Air).
+Чехол теперь полностью закрывает верхнюю и нижнюю части устройства.
+Кольцо камеры было модернизировано до рельефного «вулканического» дизайна и теперь доступно в цветах, подходящих к стилю вашего чехла, а не только в серебристом.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question"> Насколько защищен чехол серии Edge(UltraSlim)? <span>›</span></div>
+  <div class="faq-answer">
+      Серия Edge(Ultra-Slim) разработана так, чтобы быть чрезвычайно тонкой и легкой, обеспечивая ощущение, как будто устройство находится в металлическом корпусе. Она обеспечивает достаточную защиту от повседневных царапин и небольших ударов. Однако при более сильных ударах или падениях уровень защиты может не соответствовать уровню серий Cairn(ProGuard Case) или Summa(UltraGuard Case). Если защита является вашим приоритетом, мы рекомендуем выбрать одну из этих альтернатив.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question"> Совместимы ли чехлы для iPhone 17 с защитными пленками для объектива? <span>›</span></div>
+  <div class="faq-answer">
+   Да, все три чехла серии iPhone 17 поддерживают защитные пленки для объектива. Однако из-за более плотного прилегания кольца камеры в модели Cairn некоторые защитные пленки для объектива могут иметь небольшие проблемы с подгонкой.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Совместим ли чехол iPhone 17 UltraSlim с защитной пленкой из закаленного стекла? <span>›</span></div>
+  <div class="faq-answer">
+    Да, чехол UltraSlim не мешает использованию защитной пленки из закаленного стекла. Его края спроектированы так, чтобы практически полностью прилегать к экрану, обеспечивая удобный захват и помогая максимально сохранить оригинальную форму и внешний вид iPhone. Обратите внимание, что при такой конструкции защитная пленка из закаленного стекла может немного выступать над краями чехла, но это не повлияет на нормальное использование.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Чехлы для iPhone 17 закрывают кнопку управления камерой? Повлияет ли это на чувствительность? <span>›</span></div>
+  <div class="faq-answer">
+   Нет, все серии проходят тщательные испытания, чтобы гарантировать отсутствие влияния на чувствительность.
+Если вам нужно настроить чувствительность, перейдите в:
+Настройки → Камера → Управление камерой → Доступность → Сила легкого нажатия.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Как очищать чехол iPhone 17? <span>›</span></div>
+  <div class="faq-answer">
+    Повседневные следы, такие как пот или отпечатки пальцев, можно легко удалить влажной салфеткой или спиртовой салфеткой, не повредив корпус.
+Избегайте контакта с сильно окрашенными предметами, чтобы не оставить пятен.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Совместимы ли чехлы с аксессуарами MagSafe и PITAKA? <span>›</span></div>
+  <div class="faq-answer">
+    Да. Все чехлы для iPhone серии 17 имеют встроенное магнитное кольцо, поддерживающее аксессуары MagSafe и PITAKA, включая MagEZ Car Mount Pro, MagEZ Grip, Aramid Magnetic Power Bank и Magnetic Woven Wallet.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Повлияет ли использование этого чехла для iPhone 17 на беспроводную зарядку? <span>›</span></div>
+  <div class="faq-answer">
+    Нет. Наши чехлы тщательно разработаны и протестированы на совместимость с основными беспроводными зарядными устройствами. Вы можете заряжать телефон, не снимая чехол.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Остаются ли отпечатки пальцев на чехле? <span>›</span></div>
+  <div class="faq-answer">
+     Чтобы обеспечить приятное ощущение на коже, поверхность чехла покрыта специальным слоем. Иногда могут появляться отпечатки пальцев из-за пота рук или лосьона, но их легко удалить влажной салфеткой, спиртовым тампоном или даже ластиком. Используйте с уверенностью.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Как проверить подлинность чехлов для iPhone 17?<span>›</span></div>
+  <div class="faq-answer">
+    Включите NFC на своем телефоне и аккуратно коснитесь нижней части чехла. Введите серийный номер на появившейся веб-странице, чтобы проверить подлинность. Вы также можете посетить наш официальный веб-сайт, чтобы получить доступ к играм, музыке, обоям и послепродажному обслуживанию.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question"> В чем разница между арамидным волокном 600D и арамидным волокном 1500D? <span>›</span></div>
+  <div class="faq-answer">
+    По сути, арамидное волокно 600D — это более тонкая нить, а арамидное волокно 1500D — более толстая нить. Версия 600D будет более нежной на ощупь, а чехол будет немного тоньше.
+Вы можете узнать больше об этой разнице.
+  </div>
+</div>
+
+</section>
+
+
+</main>
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+
+<!-- ===== SERVICE ICONS ===== -->
+<!-- ===== SUBSCRIBE ===== -->
+<div class="footer-subscribe">
+
+<p>Подпишитесь и получите скидку 10% на первый заказ</p>
+
+<form class="subscribe-form">
+<input type="email" placeholder="Введите ваш email">
+<button>→</button>
+</form>
+
+</div>
+
+<div class="footer-line"></div>
+
+<!-- ===== SERVICE ICONS ===== -->
+<div class="footer-services">
+
+<div class="footer-service">
+<img src="{% static 'pitaka/images/png/d-011.png' %}">>
+<p>Доставка по всему Кыргызстану</p>
+</div>
+
+<div class="footer-service">
+<img src="{% static 'pitaka/images/png/d-012.png' %}">>
+<p>Покупка без риска</p>
+</div>
+
+<div class="footer-service">
+<img src="{% static 'pitaka/images/png/d-013.png' %}">>
+<p>30 дней на возврат</p>
+</div>
+
+<div class="footer-service">
+<img src="{% static 'pitaka/images/png/d-014.png' %}">>
+<p>Безопасная оплата</p>
+</div>
+
+</div>
+
+<div class="footer-line"></div>
+
+
+<!-- ===== LINKS ===== -->
+<div class="footer-grid">
+
+<div class="footer-col">
+<h4>Поддержка</h4>
+
+<a href="#">Связаться с нами</a>
+<a href="#">Частые вопросы</a>
+<a href="#">Доставка</a>
+<a href="#">Возврат</a>
+
+</div>
+
+
+<div class="footer-col">
+<h4>Компания</h4>
+
+<a href="#">О нас</a>
+<a href="#">Блог</a>
+<a href="#">Партнёры</a>
+<a href="#">Контакты</a>
+
+</div>
+
+
+<div class="footer-col">
+<h4>Покупателям</h4>
+
+<a href="#">Гарантия</a>
+<a href="#">Политика конфиденциальности</a>
+<a href="#">Условия использования</a>
+<a href="#">Оплата</a>
+
+</div>
+
+
+<div class="footer-col">
+<h4>Социальные сети</h4>
+
+<div class="social-links">
+
+<a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+
+<a href="#"><i class="fa-brands fa-telegram"></i></a>
+
+<a href="#"><i class="fa-brands fa-instagram"></i></a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ===== BOTTOM ===== -->
+<div class="footer-bottom">
+
+<div class="footer-left">
+
+Мы являемся официальным дистрибьютором PITAKA
+в Кыргызской Республике.
+
+</div>
+
+
+<div class="footer-center">
+
+<img src="{% static 'pitaka/images/logo_white.svg' %}">>
+
+</div>
+
+
+<div class="footer-right">
+
+© 2026 PITAKA. Все права защищены.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- ЗАГРУЗКА МЕНЮ -->
+<script src="menu-loader.js"></script>
+<script src="menu-interaction.js"></script>
+
+
+
+<script>
+function sendOrder() {
+
+  const name = document.getElementById("productName").innerText;
+  const price = parseFloat(document.getElementById("price").innerText);
+  const model = document.getElementById("model").value;
+  const qty = parseInt(document.getElementById("qty").value);
+  const category = document.getElementById("category").innerText;
+
+  let extrasText = "";
+  let extrasSum = 0;
+
+  document.querySelectorAll(".extra:checked").forEach(item => {
+    const itemName = item.dataset.name;
+    const itemPrice = parseFloat(item.dataset.price);
+    extrasText += `• ${itemName} — $${itemPrice}\n`;
+    extrasSum += itemPrice;
+  });
+
+  const total = (price * qty + extrasSum).toFixed(2);
+
+  const managerPhone = "996500770777";
+
+  const text = `
+Новый заказ:
+
+Товар: ${name}
+Категория: ${category}
+Модель: ${model}
+Количество: ${qty}
+Цена: $${price}
+
+Дополнительно:
+${extrasText || "—"}
+
+Итого: $${total}
+`;
+
+  window.open(
+    "https://wa.me/" + managerPhone + "?text=" + encodeURIComponent(text),
+    "_blank"
+  );
+}
+</script>
+
+
+<script>
+document.querySelectorAll(".faq-question").forEach(q => {
+  q.addEventListener("click", () => {
+    q.parentElement.classList.toggle("active");
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const mainPhoto = document.getElementById("mainPhoto");
+  const photoColors = document.querySelector(".photo-colors");
+  const thumbs = document.querySelectorAll(".thumbs img");
+
+  // ❗ ЗДЕСЬ МЕНЯЕШЬ ТОЛЬКО НАЗВАНИЯ ФАЙЛОВ
+  const colorSets = {
+     Cosmic: "iPhone17pro-sunset-slim_17c31818-9223-444c-80a9-cf6fff24a14a_1024x1024.webp",
+    Deep: "DeepBlue-iPhone17pro-sunset-slim_1024x1024.webp",
+    Silver: "silver-iPhone17pro-sunset-slim_1024x1024.webp"
+  };
+
+  // === КЛИК ПО ЦВЕТУ НА ФОТО ===
+  document.querySelectorAll(".photo-color").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".photo-color")
+        .forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const key = btn.dataset.set;
+      mainPhoto.src = colorSets[key];
+    });
+  });
+
+  // === КЛИК ПО МИНИАТЮРАМ ===
+  thumbs.forEach((img, index) => {
+    img.addEventListener("click", () => {
+      thumbs.forEach(i => i.classList.remove("active"));
+      img.classList.add("active");
+      mainPhoto.src = img.src;
+
+      // цвета ТОЛЬКО на первом фото
+      photoColors.style.display = index === 0 ? "flex" : "none";
+    });
+  });
+
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+const btn = document.getElementById("toggleComparison");
+const hidden = document.getElementById("comparisonHidden");
+
+btn.onclick = () => {
+
+  if(hidden.style.display === "block"){
+    hidden.style.display = "none";
+    btn.textContent = "Смотреть больше информации";
+  } 
+  else{
+    hidden.style.display = "block";
+    btn.textContent = "Смотреть меньше информации";
+  }
+
+};
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ meta_title|default:product.name }} - PITAKA{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/product.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="product-page">
+
+    <!-- ================= PRODUCT TOP ================= -->
+    <div class="product-top">
+
+        <!-- Thumbnails -->
+        <div class="thumbs">
+            {% for image in product.images.all %}
+            <img src="{{ image.image.url }}" 
+                 class="{% if forloop.first %}active{% endif %}"
+                 alt="{{ product.name }} - Image {{ forloop.counter }}">
+            {% empty %}
+            <img src="{% static 'images/placeholder.jpg' %}" class="active" alt="No image">
+            {% endfor %}
+        </div>
+
+        <!-- Main Image -->
+        <div class="main-image">
+            {% if product.images.first %}
+            <img id="mainPhoto" src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+            {% else %}
+            <img id="mainPhoto" src="{% static 'pitaka/images/webp/placeholder.webp' %}" alt="{{ product.name }}">
+            {% endif %}
+        </div>
+
+        <!-- Product Info -->
+        <div class="product-info">
+
+            {% if product.is_on_sale %}
+            <div class="badge">Скидка {{ product.discount_percent }}%</div>
+            {% endif %}
+
+            {% if product.is_new %}
+            <div class="badge badge-new">NEW</div>
+            {% endif %}
+
+            <h1 id="productName">{{ product.name }}</h1>
+
+            <div class="price">
+                {% if product.is_on_sale %}
+                    <span class="sale-price">{{ product.sale_price|floatformat:0 }} ₽</span>
+                    <span class="original-price">{{ product.price|floatformat:0 }} ₽</span>
+                {% else %}
+                    <span>{{ product.price|floatformat:0 }} ₽</span>
+                {% endif %}
+            </div>
+
+            <div class="info-block">
+                <div class="label">Модель устройства</div>
+                <select id="modelSelect">
+                    {% for p in same_design %}
+                    <option value="{{ p.device_model }}" {% if p.pk == product.pk %}selected{% endif %}>
+                        {{ p.device_model }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="info-block">
+                <div class="label">Тип чехла</div>
+                <div class="case-type" id="category">{{ product.get_series_display }}</div>
+            </div>
+
+            <div class="info-block">
+                <div class="label">Остаток на складе</div>
+                <div class="stock-status {% if product.stock > 0 %}in-stock{% else %}out-of-stock{% endif %}">
+                    {% if product.stock > 0 %}
+                        <i class="fa-solid fa-check"></i> В наличии: {{ product.stock }} шт.
+                    {% else %}
+                        <i class="fa-solid fa-xmark"></i> Нет в наличии
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="info-block">
+                <div class="label">Количество</div>
+                <input type="number" id="qty" value="1" min="1" max="{{ product.stock }}">
+            </div>
+
+            <!-- Add-on Products -->
+            {% if addon_products %}
+            <div class="extras-box">
+                <h4>Дополнительно</h4>
+
+                {% for addon_rel in addon_products %}
+                {% with addon=addon_rel.add_on %}
+                <div class="extra-row">
+                    <input type="checkbox" class="extra"
+                           data-product-id="{{ addon.pk }}"
+                           data-name="{{ addon.name }}"
+                           data-price="{{ addon.sale_price|default:addon.price }}">
+
+                    {% if addon.images.first %}
+                    <img src="{{ addon.images.first.image.url }}" alt="{{ addon.name }}">
+                    {% else %}
+                    <img src="{% static 'pitaka/images/webp/placeholder.webp' %}" alt="{{ addon.name }}">
+                    {% endif %}
+
+                    <div class="extra-info">
+                        <div class="extra-title">{{ addon.name }}</div>
+                        <div class="extra-variant">{{ addon.design_name }}</div>
+                        <div class="extra-price">
+                            {% if addon.is_on_sale %}
+                                <span class="price-new">{{ addon.sale_price|floatformat:2 }} $</span>
+                                <span class="price-old">{{ addon.price|floatformat:2 }} $</span>
+                            {% else %}
+                                <span>{{ addon.price|floatformat:2 }} $</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endwith %}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Action Buttons -->
+            <button class="order-btn" onclick="addToCart({{ product.pk }})">
+                <i class="fa-solid fa-cart-plus"></i> Добавить в корзину
+            </button>
+
+            <a href="{{ whatsapp_share_url }}" target="_blank" class="whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i> Заказать через WhatsApp
+            </a>
+
+            <!-- Share -->
+            <div class="share-buttons">
+                <span>Поделиться:</span>
+                <a href="https://wa.me/?text={{ product.name }} - {{ product.get_price_display }}" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}&text={{ product.name }}" target="_blank">
+                    <i class="fa-brands fa-telegram"></i>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= PRODUCT DESCRIPTION ================= -->
+    {% if product.description or product.features %}
+    <section class="product-description section">
+        <div class="container">
+            <h2>Описание</h2>
+            <div class="description-content">
+                {{ product.description|linebreaks }}
+            </div>
+            
+            {% if product.features %}
+            <ul class="features-list">
+                {% for feature in product.features %}
+                <li><i class="fa-solid fa-check"></i> {{ feature }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- ================= SPECIFICATIONS ================= -->
+    {% if specs %}
+    <section class="product-specs section">
+        <div class="container">
+            <h2>Характеристики</h2>
+            <div class="specs-grid">
+                {% for key, value in specs.items %}
+                <div class="spec-item">
+                    <span class="spec-label">{{ key|title }}</span>
+                    <span class="spec-value">{{ value }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- ================= SERIES COMPARISON ================= -->
+    <section class="comparison section">
+        <div class="container">
+            <h2 class="comparison-title">Сравнение чехлов</h2>
+
+            <div class="comparison-head">
+                {% for series in series_comparison %}
+                <div class="comparison-col {% if series.series == product.series %}active{% endif %}">
+                    <h3>{{ series.name }}</h3>
+                    <p>{{ series.tagline }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="comparison-row">
+                <div class="label">Вес</div>
+                {% for series in series_comparison %}
+                <div class="value">{{ series.weight }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="comparison-row">
+                <div class="label">Толщина</div>
+                {% for series in series_comparison %}
+                <div class="value">{{ series.thickness }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="comparison-row">
+                <div class="label">Защита</div>
+                {% for series in series_comparison %}
+                <div class="value">{{ series.protection }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    {% if faqs %}
+    <section class="faq-section section">
+        <div class="container">
+            <h2 class="faq-title">Часто задаваемые вопросы</h2>
+
+            {% for faq in faqs %}
+            <div class="faq-item">
+                <div class="faq-question">
+                    {{ faq.question }}
+                    <span>›</span>
+                </div>
+                <div class="faq-answer">
+                    {{ faq.answer|linebreaks }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- ================= RELATED PRODUCTS ================= -->
+    {% if related_products %}
+    <section class="related-products section">
+        <div class="container">
+            <h2>Рекомендуем</h2>
+            <div class="products-grid">
+                {% for related in related_products %}
+                <div class="product-card">
+                    <a href="{{ related.get_absolute_url }}">
+                        {% if related.images.first %}
+                        <img src="{{ related.images.first.image.url }}" alt="{{ related.name }}">
+                        {% else %}
+                        <img src="{% static 'pitaka/images/webp/placeholder.webp' %}" alt="{{ related.name }}">
+                        {% endif %}
+                        <h3>{{ related.name }}</h3>
+                        <p class="price">{{ related.get_price_display }}</p>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/product.js' %}"></script>
+<script>
+// Product-specific JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    // Thumbnail switching
+    const thumbs = document.querySelectorAll('.thumbs img');
+    const mainPhoto = document.getElementById('mainPhoto');
+    
+    thumbs.forEach((thumb, index) => {
+        thumb.addEventListener('click', () => {
+            thumbs.forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+            mainPhoto.src = thumb.src;
+        });
+    });
+
+    // FAQ accordion
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const item = question.parentElement;
+            item.classList.toggle('active');
+        });
+    });
+
+    // Model select change
+    const modelSelect = document.getElementById('modelSelect');
+    if (modelSelect) {
+        modelSelect.addEventListener('change', () => {
+            const selectedModel = modelSelect.value;
+            // Redirect to selected model page (implement based on your URL structure)
+            window.location.href = `/catalog/search/?device_model=${encodeURIComponent(selectedModel)}&design={{ product.design_name }}`;
+        });
+    }
+});
+
+// Add to cart function
+function addToCart(productId) {
+    const qty = document.getElementById('qty').value;
+    const extras = document.querySelectorAll('.extra:checked');
+    
+    let addonIds = [];
+    extras.forEach(extra => {
+        addonIds.push(extra.dataset.productId);
+    });
+
+    fetch('{% url "cart:add" 0 %}'.replace('0', productId), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: `quantity=${qty}&addons=${addonIds.join(',')}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update cart count
+            document.getElementById('cartCount').textContent = data.cart_count;
+            // Show success message
+            alert('Товар добавлен в корзину!');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endblock %}

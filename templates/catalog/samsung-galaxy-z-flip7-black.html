@@ -1,0 +1,1627 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Black Samsung Galaxy Z Flip7 </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* ===== РАЗМЕТКА СТРАНИЦЫ ===== */
+.product-page {
+  max-width: 1400px;
+  margin: auto;
+  padding: 40px 30px;
+}
+
+/* ===== ВЕРХНИЙ БЛОК ТОВАРА ===== */
+.product-top {
+  display: grid;
+  grid-template-columns: 90px 1fr 420px;
+  gap: 40px;
+}
+
+/* ===== МИНИАТЮРЫ ===== */
+.thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;  
+  position: relative;
+  z-index: 10;
+}
+
+
+.thumbs img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background: #f3f3f3;
+  padding: 6px;
+}
+
+.thumbs img.active {
+  border: 2px solid #000;
+}
+
+/* ===== ОСНОВНОЕ ФОТО ===== */
+.main-image {
+  background: #e7e5e2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 520px;
+}
+
+.main-image img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+/* ===== ИНФОРМАЦИЯ О ТОВАРЕ ===== */
+.product-info h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.badge {
+  display: inline-block;
+  background: #e88b52;
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.info-block {
+  margin-bottom: 18px;
+}
+
+.label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.select,
+input,
+select {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 100%;
+}
+
+.case-type {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  padding: 6px 14px;
+  font-size: 14px;
+}
+
+.order-btn {
+  margin-top: 20px;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* ===== СЕКЦИИ ===== */
+
+ .section-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.section img {
+  width: 100%;
+}
+
+.section h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.section p {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* ===== БАННЕР ===== */
+.full-banner {
+  margin-top: 120px;
+}
+
+.full-banner img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+/* ===== РЕКОМЕНДАЦИИ ===== */
+.best-title {
+  margin-top: 120px;
+  font-size: 32px;
+}
+
+.best-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.best-card img {
+  width: 100%;
+  background: #f1f1f1;
+}
+
+.best-card p {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* ===== БЛОК ИЗ 4 КАРТИНОК ===== */
+.features-grid {
+  margin-top: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.features-grid img {
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+@media(max-width: 1100px) {
+  .product-top {
+    grid-template-columns: 1fr;
+  }
+
+  .thumbs {
+    flex-direction: row;
+  }
+
+  .section-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .best-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* ================= FAQ ================= */
+.faq-section {
+  margin-top: 140px;
+  width: 100%;
+}
+
+.faq-title {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.faq-item {
+  border-top: 1px solid #bbb;
+}
+
+.faq-question {
+  padding: 22px 0;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-question span {
+  font-size: 24px;
+  transition: 0.3s;
+}
+
+.faq-item.active .faq-question span {
+  transform: rotate(90deg);
+}
+
+.faq-answer {
+  display: none;
+  padding-bottom: 25px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+/* ================= FULL WIDTH FOOTER ================= */
+.site-footer {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background: #0f0f0f;
+  color: #fff;
+  margin-top: 160px;
+}
+
+/* top subscribe */
+.footer-subscribe {
+  text-align: center;
+  padding: 40px 20px 25px;
+}
+
+.footer-subscribe input {
+  background: transparent;
+  border: 1px solid #555;
+  color: #fff;
+  padding: 12px 16px;
+  width: 300px;
+}
+
+/* icons row */
+.footer-icons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  padding: 60px 40px;
+  border-bottom: 1px solid #333;
+  font-size: 14px;
+}
+
+/* links */
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 40px;
+  padding: 60px 40px;
+  font-size: 14px;
+}
+
+.footer-links h4 {
+  margin-bottom: 15px;
+}
+
+.footer-links p {
+  margin: 6px 0;
+  opacity: 0.8;
+}
+
+/* bottom */
+.footer-bottom {
+  border-top: 1px solid #333;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.main-image {
+  background: transparent;
+  position: relative;
+}
+
+.main-image img {
+  max-width: 90%;
+  max-height: 90%;
+  z-index: 1;
+}
+.photo-colors {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.photo-color-name {
+  font-size: 13px;
+  color: #111;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+
+.photo-color {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(0,0,0,0.3);
+}
+
+.photo-color.active {
+  border-color: #000;
+}
+
+/* ================= PRODUCT COMPARISON ================= */
+
+.comparison {
+  margin-top: 160px;
+}
+
+.comparison-title {
+  font-size: 48px;
+  margin-bottom: 40px;
+border-bottom:1px solid #ddd;
+padding-bottom:20px;
+}
+
+.comparison-head,
+.comparison-row {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  align-items: center;
+  border-top: 1px solid #ddd;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.comparison-head {
+  border-top: none;
+}
+
+.comparison-head h3 {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.comparison-head p {
+  font-size: 14px;
+  color: #777;
+}
+
+.comparison-row .label {
+  text-align: left;
+  font-size: 18px;
+}
+
+.comparison-row .value {
+  font-size: 18px;
+}
+
+.image-row img {
+  max-width: 160px;
+  margin: auto;
+  display: block;
+}
+
+.image-row p {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.comparison-note {
+  margin-top: 40px;
+  font-size: 14px;
+  color: #777;
+  text-align: center;
+}
+/* ===== КНОПКА СМОТРЕТЬ БОЛЬШЕ ===== */
+
+.comparison-more{
+  text-align:center;
+  margin-top:40px;
+}
+
+.comparison-divider{
+  border-top:none;
+  margin:40px 0;
+}
+
+.comparison-btn{
+  display:inline-block;
+  padding:12px 28px;
+  border:1px solid #888;
+  border-radius:30px;
+  font-size:16px;
+  text-decoration:none;
+  color:#111;
+  transition:0.25s;
+}
+
+.comparison-btn:hover{
+  background:#111;
+  color:#fff;
+}
+
+/* ===== ADD-ONS LIKE PITAKA ===== */
+
+.extras-box {
+  margin: 25px 0;
+}
+
+.extra-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+.extra-row input {
+  width: 18px;
+  height: 18px;
+}
+
+.extra-row img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.extra-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.extra-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+}
+
+.extra-variant {
+  font-size: 13px;
+  color: #7a7a7a;
+  margin: 2px 0 4px;
+}
+
+.extra-price {
+  font-size: 14px;
+}
+
+.price-new {
+  color: #e53935;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.price-old {
+  color: #9e9e9e;
+  text-decoration: line-through;
+  font-size: 13px;
+}
+/* ===== ARAMID SECTION ===== */
+
+.aramid-section{
+padding:140px 80px;
+background:#f4f2ee;
+}
+
+.aramid-container{
+max-width:1400px;
+margin:auto;
+
+display:grid;
+grid-template-columns:1fr 1.2fr;
+gap:120px;
+align-items:center;
+}
+
+/* текст */
+
+.aramid-text h2{
+font-size:56px;
+font-weight:400;
+line-height:1.1;
+margin-bottom:30px;
+}
+
+.aramid-text p{
+font-size:18px;
+line-height:1.7;
+color:#444;
+max-width:420px;
+}
+
+/* картинка */
+
+.aramid-image img{
+width:100%;
+height:auto;
+display:block;
+}
+/* ===== PREMIUM WEAVE SECTION ===== */
+
+.weave-section{
+background:#f4f2ee;
+padding:140px 80px;
+}
+
+.weave-container{
+max-width:1400px;
+margin:auto;
+
+display:grid;
+grid-template-columns:1.2fr 1fr;
+gap:120px;
+align-items:center;
+}
+
+/* картинка */
+
+.weave-image img{
+width:100%;
+height:auto;
+display:block;
+}
+
+/* текст */
+
+.weave-text h2{
+font-size:48px;
+font-weight:400;
+margin-bottom:30px;
+}
+
+.weave-text p{
+font-size:18px;
+line-height:1.7;
+color:#444;
+max-width:420px;
+margin-bottom:18px;
+}
+
+/* ===== PITATAP SECTION ===== */
+
+.pitatap-block{
+background:#f4f2ee;
+padding:140px 80px;
+}
+
+.pitatap-container{
+max-width:1400px;
+margin:auto;
+
+display:grid;
+grid-template-columns:1fr 1.2fr;
+gap:120px;
+align-items:center;
+}
+
+/* текст */
+
+.pitatap-text h2{
+font-size:48px;
+font-weight:400;
+margin-bottom:30px;
+}
+
+.pitatap-text p{
+font-size:18px;
+line-height:1.7;
+color:#444;
+max-width:420px;
+margin-bottom:40px;
+}
+
+/* сноска */
+
+.pitatap-note{
+font-size:14px;
+color:#888;
+}
+
+/* картинка */
+
+.pitatap-image img{
+width:100%;
+height:auto;
+display:block;
+}
+
+/* ===== THIN SECTION ===== */
+
+.thin-block{
+background:#f4f2ee;
+padding:140px 80px;
+}
+
+.thin-container{
+max-width:1400px;
+margin:auto;
+
+display:grid;
+grid-template-columns:1.1fr 1fr;
+gap:120px;
+align-items:center;
+}
+
+/* картинка */
+
+.thin-image{
+background:#e6e6e6;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:40px;
+}
+
+.thin-image img{
+max-height:420px;
+width:auto;
+}
+
+/* текст */
+
+.thin-text h2{
+font-size:48px;
+font-weight:400;
+margin-bottom:30px;
+}
+
+.thin-text p{
+font-size:18px;
+line-height:1.7;
+color:#444;
+margin-bottom:40px;
+max-width:420px;
+}
+
+/* характеристики */
+
+.thin-specs{
+display:flex;
+gap:80px;
+margin-bottom:30px;
+}
+
+.spec .label{
+display:block;
+font-size:14px;
+color:#777;
+margin-bottom:6px;
+}
+
+.spec .value{
+font-size:36px;
+font-weight:500;
+}
+
+/* сноска */
+
+.thin-note{
+font-size:14px;
+color:#999;
+}
+
+/* скрытый блок */
+
+.comparison-extra{
+display:none;
+}
+
+.comparison-extra.open{
+display:block;
+}
+
+/* кнопка */
+
+.comparison-more{
+text-align:center;
+margin-top:60px;
+}
+
+.comparison-more button{
+padding:14px 36px;
+font-size:16px;
+border:1px solid #222;
+background:transparent;
+border-radius:30px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.comparison-more button:hover{
+background:#111;
+color:#fff;
+}
+/* ===== STORY SECTION ===== */
+
+
+.story-container {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 140px;
+  align-items: center;
+}
+
+.story-section {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ТЕКСТ */
+.story-text {
+  max-width: 520px;   
+}
+
+.story-text h2 {
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 30px;
+}
+
+.story-text p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 16px;
+}
+
+/* КАРТИНКА */
+.story-image {
+  display: flex;
+  justify-content: flex-end;
+  transform: translateX(60px);
+}
+
+.story-image img {
+  width: 140%;
+  max-width: none;
+}
+.story-text {
+  max-width: 600px !important;
+  width: 100% !important;
+}
+
+.story-text p {
+  max-width: 600px !important;
+}
+
+.story-text h2 {
+  width: 100% !important;
+  white-space: normal !important;
+  word-break: normal !important;
+}
+.story-section {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.protection-section {
+  padding: 100px 40px;
+  background: #f7f7f7;
+}
+
+.protection-container {
+  max-width: 1400px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1.2fr; /* текст + картинка */
+  gap: 80px;
+  align-items: center;
+}
+
+/* ТЕКСТ */
+.protection-text h2 {
+  font-size: 42px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.protection-text p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #555;
+  max-width: 420px;
+}
+
+/* КАРТИНКА */
+.protection-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+.efficiency-section{
+  padding:120px 80px;
+  background:#f4f2ee;
+}
+
+.eff-title{
+  text-align:center;
+  font-size:40px;
+  margin-bottom:60px;
+}
+
+.eff-title span{
+  color:#e08a4b;
+}
+
+.eff-container{
+  max-width:1400px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:100px;
+  align-items:center;
+}
+
+/* видео */
+.eff-video video{
+  width:100%;
+  border-radius:8px;
+}
+
+/* правая часть */
+.eff-content{
+  display:flex;
+  gap:30px;
+}
+
+/* кнопки */
+.eff-buttons{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.eff-btn{
+  width:48px;
+  height:90px;
+  border-radius:24px;
+  background:#e0e0e0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.eff-btn img{
+  width:18px;
+  opacity:0.6;
+}
+
+.eff-btn.active{
+  background:#111;
+}
+
+.eff-btn.active img{
+  filter:invert(1);
+  opacity:1;
+}
+
+/* текст */
+.eff-text h3{
+  font-size:28px;
+  margin-bottom:15px;
+}
+
+.eff-text p{
+  font-size:16px;
+  color:#555;
+  line-height:1.6;
+  margin-bottom:20px;
+  max-width:320px;
+}
+
+.eff-note{
+  font-size:13px;
+  color:#999;
+}
+.lifestyle-section{
+  background:#f4f2ee;
+  padding:120px 80px;
+}
+
+.lifestyle-container{
+  max-width:1400px;
+  margin:0 auto;
+
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  gap:100px;
+  align-items:center;
+}
+
+/* ТЕКСТ */
+.lifestyle-text{
+  max-width:520px;
+}
+
+.lifestyle-text h2{
+  font-size:56px;
+  font-weight:400;
+  line-height:1.1;
+  margin-bottom:30px;
+}
+
+.lifestyle-text p{
+  font-size:18px;
+  line-height:1.7;
+  color:#444;
+  margin-bottom:20px;
+}
+
+/* КАРТИНКА */
+.lifestyle-image{
+  display:flex;
+  justify-content:flex-end;
+}
+
+.lifestyle-image img{
+  width:100%;
+  max-width:700px;
+  border-radius:6px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- МЕНЮ -->
+<div id="menu"></div>
+
+<main class="product-page">
+
+<!-- ================= ВЕРХ ТОВАРА ================= -->
+<div class="product-top">
+
+  <!-- Миниатюры -->
+  <div class="thumbs">
+    <img src="{% static 'pitaka/images/webp/flip7-black-2_1024x1024.webp' %}"> class="active">
+    <img src="{% static 'pitaka/images/webp/flip7-black-4_1024x1024.webp' %}">>
+    <img src="{% static 'pitaka/images/webp/flip7-black-3_1024x1024.webp' %}">>
+  </div>
+
+  
+
+  <!-- Основное изображение -->
+<div class="main-image">
+
+
+  <img id="mainPhoto"
+       src="flip7-black-2_1024x1024.webp">
+
+</div>
+
+
+  <!-- Информация -->
+  <div class="product-info">
+
+    <div class="badge">Пошлины и налоги включены</div>
+
+    <h1 id="productName">600D Black/Grey (Twill) </h1>
+
+    <div class="price">$<span id="price">69.99</span></div>
+
+  <div class="info-block">
+  <div class="label">Модель устройства</div>
+  <select id="model">
+    <option>Samsung Galaxy Z Flip7</option>
+    <option>Samsung Galaxy Z Fold7</option>
+    <option>Samsung Galaxy S26 </option>
+    <option>Samsung Galaxy S26 Ultra</option>
+    <option>Samsung Galaxy S26 Plus</option>
+    <option>Samsung Galaxy Z Fold6</option>
+    <option>Samsung Galaxy Z Flip6</option>
+    <option>Samsung Galaxy S25 Ultra</option>
+    <option>Samsung Galaxy S25 Plus</option>
+    <option>Samsung Galaxy S25</option>
+  </select>
+</div>
+
+    <div class="info-block">
+      <div class="label">Тип чехла</div>
+      <div class="case-type" id="category">Ultra-slim</div>
+    </div>
+
+  
+
+    <div class="info-block">
+      <div class="label">Количество</div>
+      <input type="number" id="qty" value="1" min="1">
+    </div>
+
+
+<!-- ===== ДОБАВИТЬ К ЗАКАЗУ ===== -->
+<div class="extras-box">
+
+  <!-- MagEZ Grip -->
+  <div class="extra-row">
+    <input type="checkbox" class="extra"
+           data-name="MagEZ Grip"
+           data-price="19.99">
+
+    <img src="{% static 'pitaka/images/webp/grip3-black-2_300x@2x.webp' %}"> alt="MagEZ Grip">
+
+    <div class="extra-info">
+      <div class="extra-title">MagEZ Grip (Sale)</div>
+      <div class="extra-variant"> Black / Grip 3</div>
+      <div class="extra-price">
+        <span class="price-new">$19.99</span>
+        <span class="price-old">$24.99</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MagEZ Car Mount Pro 2 Qi2 -->
+  <div class="extra-row">
+    <input type="checkbox" class="extra"
+           data-name="MagEZ Car Mount Pro 2 Qi2"
+           data-price="53.49">
+
+    <img src="{% static 'pitaka/images/webp/mount-pro2qi2-car-vent-1_56406ba8-fd6f-4252-97d0-586f313849a8_300x@2x.webp' %}"> alt="MagEZ Mount">
+
+    <div class="extra-info">
+      <div class="extra-title">MagEZ Car Mount Pro 2 Qi2 (Sale)</div>
+      <div class="extra-variant">Car Vent / Qi2 (15W iPhone/Android)</div>
+      <div class="extra-price">
+        <span class="price-new">$53.49</span>
+        <span class="price-old">$59.99</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+    <button class="order-btn" onclick="sendOrder()">Заказать</button>
+
+  </div>
+</div>
+
+
+
+<!-- ================= БАННЕР ================= -->
+<div class="full-banner">
+  <img src="{% static 'pitaka/images/webp/bgt-samsung-z-section1-s.webp' %}">>
+</div>
+
+
+<!-- ================= СЕКЦИЯ 1 ================= -->
+<!-- ================= ARAMID SECTION ================= -->
+<section class="lifestyle-section">
+
+  <div class="lifestyle-container">
+
+    <!-- ТЕКСТ -->
+    <div class="lifestyle-text">
+
+      <h2>
+        Прочность арамида аэрокосмического класса
+      </h2>
+
+      <p>
+       Изготовлен из арамидного волокна аэрокосмического класса,
+        которое в 5 раз прочнее стали и весит всего в 5 раз меньше. 
+        Он ультратонкий, невероятно прочный и создан для превосходной защиты — без лишнего объема.
+      </p>
+
+    </div>
+
+    <!-- КАРТИНКА -->
+    <div class="lifestyle-image">
+      <img src="{% static 'pitaka/images/webp/bgt-samsung-z-section2-1.webp' %}"> alt="Case lifestyle">
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= СЕКЦИЯ 3 ================= -->
+
+<!-- ================= THIN SECTION ================= -->
+<section class="feature-block">
+
+  <div class="feature-container">
+
+    <!-- ТЕКСТ -->
+    <div class="feature-text">
+
+      <h2>Тонкий как бумага. Лёгкий как перо.</h2>
+
+      <p>
+        Ультратонкий профиль почти не ощущается в руке и сохраняет
+        оригинальные ощущения от смартфона. Идеальный выбор для тех,
+        кто ценит минимализм и защиту без лишнего веса.
+      </p>
+
+
+      <div class="feature-note">
+        *Тестировано PITAKA Lab. Возможны незначительные отклонения.
+      </div>
+
+    </div>
+
+    <!-- КАРТИНКА -->
+    <div class="feature-image">
+      <img src="{% static 'pitaka/images/webp/bgt-samsung-z-section4.webp' %}"> alt="Ultra Thin Case">
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= РЕКОМЕНДАЦИИ ================= -->
+<h2 class="best-title">Рекомендуем</h2>
+
+<div class="best-grid">
+  <div class="best-card">
+    <img src="{% static 'pitaka/images/webp/bank-black-1_500x500.webp' %}">>
+    <p>Магнитный повербанк</p>
+  </div>
+
+  <div class="best-card">
+    <img src="{% static 'pitaka/images/webp/wallet-black-2_fad3e464-a8d6-42d7-96ed-62d6756d995b_500x500.webp' %}">>
+    <p>Магнитный картхолдер</p>
+  </div>
+
+  <div class="best-card">
+    <img src="{% static 'pitaka/images/webp/grip3-moonrise-3_500x500.webp' %}">>
+    <p>Держатель-кольцо MagEZ Grip</p>
+  </div>
+
+  <div class="best-card">
+    <img src="{% static 'pitaka/images/webp/phone-strap-black-1_500x500.webp' %}">>
+    <p> 3 в 1 Ремешок для телефона</p>
+  </div>
+
+    <div class="best-card">
+    <img src="{% static 'pitaka/images/webp/phone-strap-black-1_500x500.webp' %}">>
+    <p> Карбоновый браслет для Galaxy Watch </p>
+  </div>
+</div>
+
+</section>
+
+<section class="faq-section">
+
+<h2 class="faq-title">Часто задаваемые вопросы</h2>
+
+<!-- 1 -->
+<div class="faq-item">
+  <div class="faq-question">Что случилось с сериями Ultra-Slim, ProGuard и UltraGuard? <span>›</span></div>
+  <div class="faq-answer">
+    Мы обновили названия серий.  
+    Раньше они описывали характеристики, но могли вызывать путаницу.
+
+    Теперь:
+    • Edge — тонкий и лёгкий (бывший Ultra-Slim)  
+    • Cairn — прочный и надёжный (бывший ProGuard)  
+    • Summa — максимальная защита (бывший UltraGuard)
+  </div>
+</div>
+
+<!-- 2 -->
+<div class="faq-item">
+  <div class="faq-question">Что означает "CLLN" на рамке камеры? <span>›</span></div>
+  <div class="faq-answer">
+    CLLN — это философия PITAKA:  
+    «Carry Lighter, Live Now» — Носи легче, живи сейчас.
+  </div>
+</div>
+
+<!-- 3 -->
+<div class="faq-item">
+  <div class="faq-question">Совместимы ли чехлы Galaxy S26 с аксессуарами PITAKA? <span>›</span></div>
+  <div class="faq-answer">
+    Совместимы с MagEZ Car Mount Pro и MagEZ Grip.
+
+    Обратите внимание: из-за камеры магнит может работать слабее
+    с повербанком и магнитным кошельком.
+  </div>
+</div>
+
+<!-- 4 -->
+<div class="faq-item">
+  <div class="faq-question">Почему используется открытый дизайн камеры? <span>›</span></div>
+  <div class="faq-answer">
+    Потому что многие используют защитные стекла для камеры.  
+    Открытый дизайн позволяет удобно использовать любые аксессуары.
+  </div>
+</div>
+
+<!-- 5 -->
+<div class="faq-item">
+  <div class="faq-question">Что такое Aaron Button? <span>›</span></div>
+  <div class="faq-answer">
+    Это три умные кнопки быстрого доступа.
+
+    Они позволяют:
+    • запускать команды  
+    • управлять устройствами  
+    • автоматизировать действия  
+
+    Всё — одним нажатием.
+  </div>
+</div>
+
+<!-- 6 -->
+<div class="faq-item">
+  <div class="faq-question">Чем Aaron Button отличается от PinButton? <span>›</span></div>
+  <div class="faq-answer">
+    Это улучшенная версия с поддержкой:
+    • большего количества команд  
+    • IoT управления  
+    • сценариев действий  
+
+    Теперь это полноценный центр управления.
+  </div>
+</div>
+
+<!-- 7 -->
+<div class="faq-item">
+  <div class="faq-question">Есть ли кнопка Aaron в чехлах S26? <span>›</span></div>
+  <div class="faq-answer">
+    Да, каждый чехол оснащён тремя кнопками Aaron.
+  </div>
+</div>
+
+<!-- 8 -->
+<div class="faq-item">
+  <div class="faq-question">Сколько служит кнопка Aaron? <span>›</span></div>
+  <div class="faq-answer">
+    До 100 000 нажатий при обычном использовании.
+  </div>
+</div>
+
+<!-- 9 -->
+<div class="faq-item">
+  <div class="faq-question">Совместим ли чехол с защитой камеры? <span>›</span></div>
+  <div class="faq-answer">
+    Да, с отдельными стеклами.  
+    Не подходит для цельных защитных стекол.
+  </div>
+</div>
+
+<!-- 10 -->
+<div class="faq-item">
+  <div class="faq-question">Насколько выступает рамка камеры? <span>›</span></div>
+  <div class="faq-answer">
+    • S26 Ultra — ~0.6 мм  
+    • S26 / S26+ — ~1 мм
+  </div>
+</div>
+
+<!-- 11 -->
+<div class="faq-item">
+  <div class="faq-question">Чехол полностью закрывает телефон? <span>›</span></div>
+  <div class="faq-answer">
+    Нет. Кнопки и разъёмы остаются открытыми.
+  </div>
+</div>
+
+<!-- 12 -->
+<div class="faq-item">
+  <div class="faq-question">Насколько чехол выступает над экраном? <span>›</span></div>
+  <div class="faq-answer">
+    • Углы — 0.5–0.6 мм  
+    • Бока — 0.3–0.4 мм  
+
+    Нижняя часть ниже — для удобного снятия.
+  </div>
+</div>
+
+<!-- 13 -->
+<div class="faq-item">
+  <div class="faq-question">Совместим ли с магнитным повербанком? <span>›</span></div>
+  <div class="faq-answer">
+    Зарядка работает, но магнит может быть слабее из-за камеры.
+  </div>
+</div>
+
+<!-- 14 -->
+<div class="faq-item">
+  <div class="faq-question">В чём разница между 600D и 1500D? <span>›</span></div>
+  <div class="faq-answer">
+    600D — тоньше и мягче на ощупь.  
+    1500D — толще и более выраженная текстура.
+  </div>
+</div>
+
+</section>
+
+
+</main>
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+
+<!-- ===== SERVICE ICONS ===== -->
+<!-- ===== SUBSCRIBE ===== -->
+<div class="footer-subscribe">
+
+<p>Подпишитесь и получите скидку 10% на первый заказ</p>
+
+<form class="subscribe-form">
+<input type="email" placeholder="Введите ваш email">
+<button>→</button>
+</form>
+
+</div>
+
+<div class="footer-line"></div>
+
+<!-- ===== SERVICE ICONS ===== -->
+<div class="footer-services">
+
+<div class="footer-service">
+<img src="{% static 'pitaka/images/png/d-011.png' %}">>
+<p>Доставка по всему Кыргызстану</p>
+</div>
+
+<div class="footer-service">
+<img src="{% static 'pitaka/images/png/d-012.png' %}">>
+<p>Покупка без риска</p>
+</div>
+
+<div class="footer-service">
+<img src="{% static 'pitaka/images/png/d-013.png' %}">>
+<p>30 дней на возврат</p>
+</div>
+
+<div class="footer-service">
+<img src="{% static 'pitaka/images/png/d-014.png' %}">>
+<p>Безопасная оплата</p>
+</div>
+
+</div>
+
+<div class="footer-line"></div>
+
+
+<!-- ===== LINKS ===== -->
+<div class="footer-grid">
+
+<div class="footer-col">
+<h4>Поддержка</h4>
+
+<a href="#">Связаться с нами</a>
+<a href="#">Частые вопросы</a>
+<a href="#">Доставка</a>
+<a href="#">Возврат</a>
+
+</div>
+
+
+<div class="footer-col">
+<h4>Компания</h4>
+
+<a href="#">О нас</a>
+<a href="#">Блог</a>
+<a href="#">Партнёры</a>
+<a href="#">Контакты</a>
+
+</div>
+
+
+<div class="footer-col">
+<h4>Покупателям</h4>
+
+<a href="#">Гарантия</a>
+<a href="#">Политика конфиденциальности</a>
+<a href="#">Условия использования</a>
+<a href="#">Оплата</a>
+
+</div>
+
+
+<div class="footer-col">
+<h4>Социальные сети</h4>
+
+<div class="social-links">
+
+<a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+
+<a href="#"><i class="fa-brands fa-telegram"></i></a>
+
+<a href="#"><i class="fa-brands fa-instagram"></i></a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ===== BOTTOM ===== -->
+<div class="footer-bottom">
+
+<div class="footer-left">
+
+Мы являемся официальным дистрибьютором PITAKA
+в Кыргызской Республике.
+
+</div>
+
+
+<div class="footer-center">
+
+<img src="{% static 'pitaka/images/logo_white.svg' %}">>
+
+</div>
+
+
+<div class="footer-right">
+
+© 2026 PITAKA. Все права защищены.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- ЗАГРУЗКА МЕНЮ -->
+<script src="menu-loader.js"></script>
+<script src="menu-interaction.js"></script>
+
+
+
+<script>
+function sendOrder() {
+
+  const name = document.getElementById("productName").innerText;
+  const price = parseFloat(document.getElementById("price").innerText);
+  const model = document.getElementById("model").value;
+  const qty = parseInt(document.getElementById("qty").value);
+  const category = document.getElementById("category").innerText;
+
+  let extrasText = "";
+  let extrasSum = 0;
+
+  document.querySelectorAll(".extra:checked").forEach(item => {
+    const itemName = item.dataset.name;
+    const itemPrice = parseFloat(item.dataset.price);
+    extrasText += `• ${itemName} — $${itemPrice}\n`;
+    extrasSum += itemPrice;
+  });
+
+  const total = (price * qty + extrasSum).toFixed(2);
+
+  const managerPhone = "996500770777";
+
+  const text = `
+Новый заказ:
+
+Товар: ${name}
+Категория: ${category}
+Модель: ${model}
+Количество: ${qty}
+Цена: $${price}
+
+Дополнительно:
+${extrasText || "—"}
+
+Итого: $${total}
+`;
+
+  window.open(
+    "https://wa.me/" + managerPhone + "?text=" + encodeURIComponent(text),
+    "_blank"
+  );
+}
+</script>
+
+
+<script>
+document.querySelectorAll(".faq-question").forEach(q => {
+  q.addEventListener("click", () => {
+    q.parentElement.classList.toggle("active");
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const mainPhoto = document.getElementById("mainPhoto");
+  const photoColors = document.querySelector(".photo-colors");
+  const thumbs = document.querySelectorAll(".thumbs img");
+
+  
+
+  // === КЛИК ПО МИНИАТЮРАМ ===
+  thumbs.forEach((img, index) => {
+    img.addEventListener("click", () => {
+      thumbs.forEach(i => i.classList.remove("active"));
+      img.classList.add("active");
+      mainPhoto.src = img.src;
+
+      // цвета ТОЛЬКО на первом фото
+      photoColors.style.display = index === 0 ? "flex" : "none";
+    });
+  });
+
+});
+</script>
+<script>
+
+const btn = document.getElementById("comparisonToggle");
+const extra = document.getElementById("comparison-extra");
+
+btn.addEventListener("click", () => {
+
+  extra.classList.toggle("open");
+
+  if(extra.classList.contains("open")){
+    btn.innerText = "Смотреть меньше информации";
+  } else {
+    btn.innerText = "Смотреть больше информации";
+  }
+
+});
+
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const playBtn = document.querySelector(".play-button");
+  const video = document.getElementById("videoPlayer");
+
+  playBtn.addEventListener("click", () => {
+    video.play();
+    playBtn.style.display = "none";
+  });
+});
+</script>
+<script>
+const data = [
+  {
+    video: "aaron-button-section4-1.mp4",
+    title: "Для эффективности.",
+    desc: "Убирает цифровой шум. Мгновенно запускайте диктофон или нужные действия — оставайтесь в потоке."
+  },
+  {
+    video: "aaron-button-section4-2.mp4",
+    title: "Для простоты.",
+    desc: "Убирает лишние действия. Быстро открывайте навигацию или перевод — всё работает мгновенно."
+  },
+  {
+    video: "aaron-button-section-aaron-3.mp4",
+    title: "Для вдохновения.",
+    desc: "Ловите идеи моментально. Общайтесь с AI, делайте заметки или включайте музыку."
+  }
+];
+
+const buttons = document.querySelectorAll(".eff-btn");
+const video = document.getElementById("effVideo");
+const title = document.getElementById("effTitle");
+const desc = document.getElementById("effDesc");
+
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+
+    buttons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    const id = btn.dataset.id;
+    const item = data[id];
+
+    video.src = item.video;
+    video.play();
+
+    title.innerText = item.title;
+    desc.innerText = item.desc;
+
+  });
+});
+</script>
+</body>
+</html>

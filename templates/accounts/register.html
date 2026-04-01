@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Регистрация | PITAKA{% endblock %}
+
+{% block content %}
+<section class="auth-page">
+    <div class="auth-container">
+        <h1>Создать аккаунт</h1>
+        
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            
+            {{ form.non_field_errors }}
+            
+            <div class="form-group">
+                <label for="id_username">Имя пользователя</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+                <small>Только буквы, цифры и символы @/./+/-/_</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                <input type="email" name="email" id="id_email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password1">Пароль</label>
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password2">Подтверждение пароля</label>
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </div>
+            
+            <button type="submit" class="btn-solid btn-full">Создать аккаунт</button>
+        </form>
+        
+        <div class="auth-divider">
+            <span>или</span>
+        </div>
+        
+        <a href="{% url 'accounts:login' %}" class="btn-outline btn-full">
+            Уже есть аккаунт? Войти
+        </a>
+    </div>
+</section>
+{% endblock %}

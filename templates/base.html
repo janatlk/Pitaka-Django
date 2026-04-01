@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PITAKA - Премиальные чехлы из арамидного волокна{% endblock %}</title>
+    
+    {% load static %}
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🏷️</text></svg>">
+
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+    {% block extra_css %}{% endblock %}
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <span>Back to Iconic | PITAKA Monogram</span>
+        <span>Бесплатная доставка при заказе от 10 000 ₽</span>
+        <span>Чехлы AirPods Pro 3 уже в продаже!</span>
+    </div>
+    
+    <!-- Header -->
+    <header class="header">
+        <a href="{% url 'core:home' %}" class="logo">
+            <img src="{% static 'images/logo_black.svg' %}" alt="PITAKA">
+        </a>
+
+        {# Navigation with data-menu attributes for mega menu #}
+        <nav class="nav">
+            <div class="nav-item active" data-menu="phone">
+                <span>Чехлы для телефонов</span>
+            </div>
+            <div class="nav-item" data-menu="tablet">
+                <span>Чехлы для планшетов</span>
+            </div>
+            <div class="nav-item" data-menu="watch">
+                <span>Аксессуары для Apple Watch и AirPods</span>
+            </div>
+            <div class="nav-item" data-menu="magsafe">
+                <span>Аксессуары MagSafe</span>
+            </div>
+            <div class="nav-item" data-menu="accessories">
+                <span>Аксессуары</span>
+            </div>
+        </nav>
+
+        <div class="icons">
+            <!-- Account -->
+            <div class="icon-item">
+                <a href="{% url 'accounts:login' %}">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+            </div>
+
+            <!-- Support -->
+            <div class="icon-item support">
+                <i class="fa-solid fa-headphones"></i>
+                <div class="dropdown">
+                    <p>Служба поддержки</p>
+                    <p>Связаться с нами</p>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="icon-item search" id="searchIcon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <!-- Auth Check -->
+            <div class="icon-item auth-check">
+                <a href="https://verification.ipitaka.com/index.html" target="_blank" title="Проверить подлинность">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </a>
+            </div>
+
+            <!-- Cart -->
+            <div class="icon-item cart" id="cartIcon">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MEGA MENU -->
+    <div class="mega">
+        <div class="mega-inner">
+            <!-- PHONE -->
+            <div class="mega-section active" data-menu="phone">
+                <div class="mega-left">
+                    <p class="mega-tab" data-tab="devices">По устройствам</p>
+                    <p class="mega-tab" data-tab="series">По сериям</p>
+                    <p class="mega-tab active" data-tab="style">По стилю</p>
+                </div>
+
+                <div class="mega-content active" id="devices">
+                    <div class="mega-col">
+                        <h4>Чехлы для iPhone</h4>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-17-pro-max' %}">iPhone 17 Pro Max <span class="badge-new">NEW</span></a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-17-pro' %}">iPhone 17 Pro <span class="badge-new">NEW</span></a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-air' %}">iPhone Air <span class="badge-new">NEW</span></a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-17' %}">iPhone 17 <span class="badge-new">NEW</span></a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-16-pro-max' %}">iPhone 16 Pro Max</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-16-pro' %}">iPhone 16 Pro</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-16-plus' %}">iPhone 16 Plus</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'iphone' 'iphone-16' %}">iPhone 16</a>
+                    </div>
+
+                    <div class="mega-col">
+                        <h4>Чехлы для Samsung</h4>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-s26-ultra' %}">Galaxy S26 Ultra <span class="badge-new">NEW</span></a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-s26-plus' %}">Galaxy S26 Plus <span class="badge-new">NEW</span></a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-s26' %}">Galaxy S26 <span class="badge-new">NEW</span></a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-z-fold7' %}">Galaxy Z Fold 7</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-z-flip7' %}">Galaxy Z Flip 7</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-s25-ultra' %}">Galaxy S25 Ultra</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'samsung' 'galaxy-s25-plus' %}">Galaxy S25 Plus</a>
+                    </div>
+
+                    <div class="mega-col">
+                        <h4>Чехлы для Google Pixel</h4>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'pixel' 'pixel-10-pro-xl' %}">Pixel 10 Pro XL</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'pixel' 'pixel-10-pro' %}">Pixel 10 Pro</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'pixel' 'pixel-10' %}">Pixel 10</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'pixel' 'pixel-9-pro-fold' %}">Pixel 9 Pro Fold</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'pixel' 'pixel-9-pro-xl' %}">Pixel 9 Pro XL</a>
+                    </div>
+                </div>
+
+                <div class="mega-content" id="series">
+                    <div class="series-grid">
+                        <div class="series-card">
+                            <img src="{% static 'pitaka/images/webp/menu-edge.webp' %}" alt="UltraGuard">
+                            <h4>UltraGuard</h4>
+                            <p>Искусство минимализма.</p>
+                        </div>
+                        <div class="series-card">
+                            <img src="{% static 'pitaka/images/jpg/menu-cairn.jpg' %}" alt="ProGuard">
+                            <h4>ProGuard</h4>
+                            <p>Путь надёжной защиты.</p>
+                        </div>
+                        <div class="series-card">
+                            <img src="{% static 'pitaka/images/webp/menu-summa.webp' %}" alt="Ultra-Slim">
+                            <h4>Ultra-Slim</h4>
+                            <p>Совершенство мастерства.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mega-content" id="style">
+                    <div class="style-left">
+                        <p class="style-link active" data-style="moment">Момент</p>
+                        <p class="style-link" data-style="essential">Основные</p>
+                        <p class="style-link" data-style="collaboration">Коллаборации</p>
+                    </div>
+
+                    <div class="style-content">
+                        <div class="style-grid active" data-style="moment">
+                            <div class="product-card framed">
+                                <img src="{% static 'pitaka/images/avif/menu-glints-of-gold.avif' %}" alt="Glints of Gold">
+                                <p class="product-title">Glints of Gold</p>
+                            </div>
+                            <div class="product-card framed">
+                                <img src="{% static 'pitaka/images/avif/menu-sunset.avif' %}" alt="Sunset">
+                                <p class="product-title">Sunset</p>
+                            </div>
+                            <div class="product-card framed">
+                                <img src="{% static 'pitaka/images/avif/menu-moonrise.avif' %}" alt="Moonrise">
+                                <p class="product-title">Moonrise</p>
+                            </div>
+                            <div class="product-card framed">
+                                <img src="{% static 'pitaka/images/avif/menu-over-the-horizon.avif' %}" alt="Over the horizon">
+                                <p class="product-title">Over the horizon</p>
+                            </div>
+                            <div class="product-card framed more-card">
+                                <p>Ещё ></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLET -->
+            <div class="mega-section" data-menu="tablet">
+                <div class="mega-left">
+                    <p class="mega-tab active" data-tab="tablet-devices">По устройствам</p>
+                    <p class="mega-tab" data-tab="tablet-types">По типу продукта</p>
+                </div>
+
+                <div class="mega-content active" id="tablet-devices">
+                    <div class="mega-col">
+                        <h4>iPad Pro</h4>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-pro-13-m5' %}">iPad Pro 13″ (M5)</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-pro-11-m5' %}">iPad Pro 11″ (M5)</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-pro-13-m4' %}">iPad Pro 13″ (M4)</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-pro-11-m4' %}">iPad Pro 11″ (M4)</a>
+                    </div>
+                    <div class="mega-col">
+                        <h4>iPad Air</h4>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-air-13' %}">iPad Air 13″</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-air-11' %}">iPad Air 11″</a>
+                    </div>
+                    <div class="mega-col">
+                        <h4>iPad Mini</h4>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-mini-7' %}">iPad mini 7</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-mini-6' %}">iPad mini 6</a>
+                    </div>
+                    <div class="mega-col">
+                        <h4>iPad</h4>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-a16' %}">iPad (A16)</a>
+                        <a class="model-item" href="{% url 'catalog:model_list' 'ipad' 'ipad-10' %}">iPad (10-е поколение)</a>
+                    </div>
+                </div>
+
+                <div class="mega-content" id="tablet-types">
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?series=ultra-slim">Ультратонкие чехлы</a>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?series=proguard">Чехлы с подставкой</a>
+                    <a class="model-item" href="{% url 'catalog:catalog' %}?series=ultraguard">Чехлы с клавиатурой</a>
+                </div>
+            </div>
+
+            <!-- WATCH & AIRPODS -->
+            <div class="mega-section" data-menu="watch">
+                <div class="watch-left">
+                    <p class="watch-link active" data-watch="bands">Ремешки из карбона</p>
+                    <p class="watch-link" data-watch="aramid">Чехлы из арамидного волокна</p>
+                    <p class="watch-link" data-watch="airpods">Чехлы для AirPods <span class="new">NEW</span></p>
+                </div>
+
+                <div class="watch-content">
+                    <div class="watch-grid active" data-watch="bands">
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-watchband-modern.avif' %}" alt="Modern">
+                            <p class="product-title">Modern</p>
+                            <span>(Для Apple Watch)</span>
+                        </div>
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-watchband-moon.avif' %}" alt="Moon">
+                            <p class="product-title">Moon</p>
+                            <span>(Для Apple Watch)</span>
+                        </div>
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-watchband-mosaic.avif' %}" alt="Mosaic">
+                            <p class="product-title">Mosaic</p>
+                            <span>(Для Apple Watch)</span>
+                        </div>
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-watchband-stairs.avif' %}" alt="Stairs">
+                            <p class="product-title">Stairs</p>
+                            <span>(Для Apple Watch)</span>
+                        </div>
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-watchband-rhapsody.avif' %}" alt="Rhapsody">
+                            <p class="product-title">Rhapsody</p>
+                            <span>(Для Apple Watch)</span>
+                        </div>
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-watchband-galaxy.avif' %}" alt="Modern">
+                            <p class="product-title">Modern</p>
+                            <span>(Для Galaxy Watch)</span>
+                        </div>
+                    </div>
+
+                    <div class="watch-grid" data-watch="aramid">
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-watchcase-ultra.avif' %}" alt="Watch Ultra">
+                            <p class="product-title">For Apple Watch Ultra 3 / Ultra 2 / Ultra</p>
+                        </div>
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-watchcase-series1110.avif' %}" alt="Watch Series 11/10">
+                            <p class="product-title">For Apple Watch Series 11 / 10</p>
+                        </div>
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-watchcase-series789.avif' %}" alt="Watch Series 7/8/9">
+                            <p class="product-title">For Apple Watch Series 7 / 8 / 9</p>
+                        </div>
+                    </div>
+
+                    <div class="watch-grid" data-watch="airpods">
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-airpodspro3-case.avif' %}" alt="AirPods Pro 3">
+                            <p class="product-title">AirPods Pro 3 <span class="new">NEW</span></p>
+                        </div>
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-airpodspro2-case.avif' %}" alt="AirPods Pro 2">
+                            <p class="product-title">AirPods Pro 2</p>
+                        </div>
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-airpodspro-case.avif' %}" alt="AirPods Pro">
+                            <p class="product-title">AirPods Pro</p>
+                        </div>
+                        <div class="product-card">
+                            <img src="{% static 'pitaka/images/avif/menu-airpods4-case.avif' %}" alt="AirPods 4">
+                            <p class="product-title">AirPods 4</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAGSAFE -->
+            <div class="mega-section" data-menu="magsafe">
+                <div class="watch-left">
+                    <p class="watch-link active" data-watch="wallets">Кардхолдер</p>
+                    <p class="watch-link" data-watch="powerbanks">Повербанк</p>
+                    <p class="watch-link" data-watch="mounts">Держатели и кольца</p>
+                </div>
+
+                <div class="watch-content">
+                    <div class="watch-grid active" data-watch="wallets">
+                        <div class="product-card framed">
+                            <img src="{% static 'pitaka/images/avif/menu-wallet-bgt.avif' %}" alt="BGT Wallet">
+                            <p class="product-title">Black/Grey (Twill)</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'pitaka/images/avif/menu-wallet-sunset.avif' %}" alt="Sunset Wallet">
+                            <p class="product-title">Sunset</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'pitaka/images/avif/menu-wallet-moonrise.avif' %}" alt="Moonrise Wallet">
+                            <p class="product-title">Moonrise</p>
+                        </div>
+                    </div>
+
+                    <div class="watch-grid" data-watch="powerbanks">
+                        <div class="product-card framed">
+                            <img src="{% static 'pitaka/images/avif/menu-powerbank-bgt.avif' %}" alt="BGT Powerbank">
+                            <p class="product-title">Black/Grey (Twill)</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'pitaka/images/avif/menu-powerbank-sunset.avif' %}" alt="Sunset Powerbank">
+                            <p class="product-title">Sunset</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'pitaka/images/avif/menu-powerbank-moonrise.avif' %}" alt="Moonrise Powerbank">
+                            <p class="product-title">Moonrise</p>
+                        </div>
+                    </div>
+
+                    <div class="watch-grid" data-watch="mounts">
+                        <div class="product-card framed">
+                            <img src="{% static 'pitaka/images/avif/menu-car-mount.avif' %}" alt="Car Mount">
+                            <p class="product-title">Автодержатель</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'pitaka/images/avif/menu-grip.avif' %}" alt="Grip">
+                            <p class="product-title">Магнитное кольцо</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACCESSORIES -->
+            <div class="mega-section" data-menu="accessories">
+                <div class="mega-left">
+                    <p class="mega-tab active" data-tab="acc-categories">Категории</p>
+                    <p class="mega-tab" data-tab="acc-styles">Стили</p>
+                </div>
+
+                <div class="mega-content active" id="acc-categories">
+                    <div class="mega-col">
+                        <h4>Аксессуары</h4>
+                        <a class="model-item" href="{% url 'catalog:catalog' %}">MagSafe Accessories</a>
+                        <a class="model-item" href="{% url 'catalog:catalog' %}">Phone Accessories</a>
+                        <a class="model-item" href="{% url 'catalog:catalog' %}">Premium Accessories</a>
+                        <a class="model-item" href="{% url 'catalog:catalog' %}">Minimal Accessories</a>
+                    </div>
+                </div>
+
+                <div class="mega-content" id="acc-styles">
+                    <div class="style-grid active">
+                        <div class="product-card framed">
+                            <img src="{% static 'pitaka/images/avif/menu-aries.avif' %}" alt="Aries">
+                            <p class="product-title">PITAKA | Aries | No Problemo</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'pitaka/images/avif/menu-re-tros.avif' %}" alt="Re-Tros">
+                            <p class="product-title">PITAKA | △</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'pitaka/images/avif/menu-another.avif' %}" alt="Another">
+                            <p class="product-title">PITAKA | KIE</p>
+                        </div>
+                        <div class="product-card framed">
+                            <img src="{% static 'pitaka/images/avif/menu-awa.avif' %}" alt="AWA">
+                            <p class="product-title">PITAKA | AWA</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Search Overlay #}
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-inner">
+            <form action="{% url 'catalog:search' %}" method="GET" class="search-top">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" name="q" placeholder="Поиск товаров..." value="{{ request.GET.q }}">
+                <button type="submit" style="display:none;"></button>
+                <i class="fa-solid fa-xmark" id="closeSearch"></i>
+            </form>
+            <div class="search-tags">
+                <a href="{% url 'catalog:device_list' 'iphone' %}">iPhone</a>
+                <a href="{% url 'catalog:model_list' 'iphone' 'iphone-17-pro' %}">iPhone 17 Pro</a>
+                <a href="{% url 'catalog:model_list' 'iphone' 'iphone-17-pro-max' %}">iPhone 17 Pro Max</a>
+                <a href="{% url 'catalog:device_list' 'samsung' %}">Samsung</a>
+                <a href="{% url 'catalog:model_list' 'samsung' 'galaxy-s26-ultra' %}">Galaxy S26 Ultra</a>
+                <a href="{% url 'catalog:catalog' %}?series=ultra-slim">Ultra-Slim</a>
+                <a href="{% url 'catalog:catalog' %}?series=proguard">ProGuard</a>
+                <a href="{% url 'catalog:catalog' %}?design=Sunset">Sunset</a>
+                <a href="{% url 'catalog:catalog' %}?design=Moonrise">Moonrise</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cart Drawer -->
+    {% include 'includes/cart_drawer.html' %}
+    
+    <!-- Main Content -->
+    <main>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message message-{{ message.tags }}">
+                {{ message }}
+                <i class="fa-solid fa-xmark" onclick="this.parentElement.remove()"></i>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

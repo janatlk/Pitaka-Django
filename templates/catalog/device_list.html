@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ device_model|default:device_type|title }} Чехлы | PITAKA{% endblock %}
+
+{% block content %}
+<section class="catalog-page">
+    <div class="container">
+        <h1>{{ device_model|default:device_type|title }}</h1>
+        
+        {% if products %}
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <div class="product-image">
+                    <a href="{% url 'catalog:product_detail' product.slug %}">
+                        {% if product.images.first %}
+                        <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                        <img src="{% static 'pitaka/images/webp/placeholder.webp' %}" alt="{{ product.name }}">
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="product-meta">
+                    <span>{{ product.device_model }}</span>
+                    {% if product.series %}
+                    <span class="badge">{{ product.get_series_display }}</span>
+                    {% endif %}
+                </div>
+                <h3 class="product-title">
+                    <a href="{% url 'catalog:product_detail' product.slug %}">{{ product.design_name }}</a>
+                </h3>
+                <div class="product-price">
+                    <span class="price">{{ product.get_price_display }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="no-products">Товары скоро появятся</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

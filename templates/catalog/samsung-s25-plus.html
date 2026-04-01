@@ -1,0 +1,1437 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Чехлы Samsung Galaxy S25 Plus </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- MAIN STYLES -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- MENU STYLES -->
+  <link rel="stylesheet" href="menu.css">
+
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+  <style>
+
+/* === ЛОКАЛЬНЫЕ СТИЛИ ТОЛЬКО ДЛЯ iphone17promax.html === */
+
+/* Отступы страницы — примерно 1 см */
+.catalog-page {
+  padding-left: 1cm;
+  padding-right: 1cm;
+}
+
+/* Сетка карточек — как на примере (4 в ряд) */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  margin-top: 40px;
+}
+
+/* Карточка */
+.product-card {
+  position: relative;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 18px;
+}
+
+/* Блок картинки */
+.product-image {
+  background: #efede8;
+  height: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Картинка */
+.product-image img {
+  max-height: 440px;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+  transform: translateY(-6px);
+}
+
+/* Метаданные */
+.product-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #777;
+}
+
+/* Название */
+.product-title {
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+/* Кнопки */
+.product-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-outline {
+  flex: 1;
+  background: transparent;
+  border: 1px solid #000;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.btn-solid {
+  flex: 1;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Иконка корзины */
+.product-cart {
+  position: absolute;
+  right: 0;
+  bottom: 70px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Адаптив */
+@media (max-width: 1200px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Кнопка "Показать все товары" */
+.show-all-btn {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  font-size: 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  transition: 0.25s ease;
+  z-index: 999;
+}
+
+.show-all-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* КРУЖКИ ЦВЕТОВ */
+
+.product-colors{
+display:flex;
+gap:6px;
+margin-top:10px;
+}
+
+.color-thumb{
+width:16px;
+height:16px;
+border-radius:50%;
+border:1px solid #ccc;
+object-fit:cover;
+cursor:pointer;
+display:block;
+}
+
+.color-thumb.active{
+border:2px solid #000;
+}
+.section-title{
+margin-top:80px;
+}
+.accessories-title{
+margin-top:80px;
+}
+
+.why-pitaka{
+margin-top:120px;
+}
+
+.why-title{
+font-size:40px;
+font-weight:500;
+margin-bottom:20px;
+border-bottom:1px solid #ccc;
+padding-bottom:15px;
+}
+
+.why-subtitle{
+font-size:18px;
+color:#7a7a7a;
+margin-bottom:40px;
+}
+
+.why-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:35px;
+}
+
+.why-card{
+text-decoration:none;
+color:#000;
+display:block;
+transition:0.3s;
+}
+
+.why-card img{
+width:100%;
+height:260px;
+object-fit:cover;
+margin-bottom:18px;
+}
+
+.why-card h3{
+font-size:20px;
+margin-bottom:10px;
+}
+
+.why-card p{
+font-size:14px;
+color:#777;
+line-height:1.6;
+border-top:1px solid #ddd;
+padding-top:10px;
+}
+
+.why-card:hover img{
+transform:scale(1.03);
+}
+
+.why-card img{
+transition:0.3s;
+}
+/* ================= FULL WIDTH FOOTER ================= */
+
+/* top subscribe */
+.footer-subscribe {
+  text-align: center;
+  padding: 40px 20px 25px;
+}
+
+.footer-subscribe input {
+  background: transparent;
+  border: 1px solid #555;
+  color: #fff;
+  padding: 12px 16px;
+  width: 300px;
+}
+
+/* icons row */
+.footer-icons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  padding: 60px 40px;
+  border-bottom: 1px solid #333;
+  font-size: 14px;
+}
+
+/* links */
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 40px;
+  padding: 60px 40px;
+  font-size: 14px;
+}
+
+.footer-links h4 {
+  margin-bottom: 15px;
+}
+
+.footer-links p {
+  margin: 6px 0;
+  opacity: 0.8;
+}
+
+/* bottom */
+.footer-bottom {
+  border-top: 1px solid #333;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.main-image {
+  background: transparent;
+  position: relative;
+}
+
+.main-image img {
+  max-width: 90%;
+  max-height: 90%;
+  z-index: 1;
+}
+.photo-colors {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.photo-color-name {
+  font-size: 13px;
+  color: #111;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+
+.photo-color {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(0,0,0,0.3);
+}
+
+.photo-color.active {
+  border-color: #000;
+}
+
+/* ================= PRODUCT COMPARISON ================= */
+
+.comparison {
+  margin-top: 160px;
+}
+
+.comparison-title {
+  font-size: 48px;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.comparison-head,
+.comparison-row {
+  display: grid;
+  grid-template-columns: repeat(2, 300px);
+  justify-content: center;
+  text-align: center;
+  column-gap: 120px;
+}
+
+.comparison-head {
+  border-top: none;
+}
+
+.comparison-head h3 {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.comparison-head p {
+  font-size: 14px;
+  color: #777;
+}
+
+.comparison-row .label {
+  text-align: left;
+  font-size: 18px;
+}
+
+.comparison-row .value {
+  font-size: 18px;
+}
+.image-row {
+  border-bottom: 1px solid #dcdcdc;
+  justify-content: center;
+}
+
+.image-row img {
+  max-width: 160px;
+  margin:0 auto;
+  display: block;
+}
+
+.image-row p {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.comparison-note {
+  margin-top: 40px;
+  font-size: 14px;
+  color: #777;
+  text-align: center;
+}
+/* ===== КНОПКА СМОТРЕТЬ БОЛЬШЕ ===== */
+
+.comparison-more{
+  text-align:center;
+  margin-top:40px;
+}
+
+.comparison-divider{
+  border-top:1px solid #dcdcdc;
+  margin:40px 0;
+}
+
+.comparison-btn{
+  display:inline-block;
+  padding:12px 28px;
+  border:1px solid #888;
+  border-radius:30px;
+  font-size:16px;
+  text-decoration:none;
+  color:#111;
+  transition:0.25s;
+}
+
+.comparison-btn:hover{
+  background:#111;
+  color:#fff;
+}
+
+/* ===== ADD-ONS LIKE PITAKA ===== */
+
+.extras-box {
+  margin: 25px 0;
+}
+
+.extra-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+.extra-row input {
+  width: 18px;
+  height: 18px;
+}
+
+.extra-row img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.extra-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.extra-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+}
+
+.extra-variant {
+  font-size: 13px;
+  color: #7a7a7a;
+  margin: 2px 0 4px;
+}
+
+.extra-price {
+  font-size: 14px;
+}
+
+.price-new {
+  color: #e53935;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.price-old {
+  color: #9e9e9e;
+  text-decoration: line-through;
+  font-size: 13px;
+}
+/* скрытый блок */
+
+.comparison-extra{
+display:none;
+}
+
+.comparison-extra.open{
+display:block;
+}
+
+/* кнопка */
+
+.comparison-more{
+text-align:center;
+margin-top:60px;
+}
+
+.comparison-more button{
+padding:14px 36px;
+font-size:16px;
+border:1px solid #222;
+background:transparent;
+border-radius:30px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.comparison-more button:hover{
+background:#111;
+color:#fff;
+}
+/* ================= FAQ ================= */
+.faq-section {
+  margin-top: 140px;
+  width: 100%;
+}
+
+.faq-title {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.faq-item {
+  border-top: 1px solid #bbb;
+}
+
+.faq-question {
+  padding: 22px 0;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-question span {
+  font-size: 24px;
+  transition: 0.3s;
+}
+
+.faq-item.active .faq-question span {
+  transform: rotate(90deg);
+}
+
+.faq-answer {
+  display: none;
+  padding-bottom: 25px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+</style>
+
+
+</head>
+
+<body class="menu-css">
+<div id="menu"></div>
+
+
+<!-- ================= PAGE ================= -->
+<main class="catalog-page">
+
+<!-- ================= CHOOSE TYPE ================= -->
+<section class="choose-type">
+
+  <h1 class="section-title">Выберите тип</h1>
+
+ <div class="type-grid">
+
+  <div class="type-card" data-filter="Ultra-slim">
+    <img src="{% static 'pitaka/images/webp/collection-type-edge.webp' %}">>
+    <h3>Ultra-Slim</h3>
+    <p>Тонкие и лёгкие</p>
+  </div>
+
+</div>
+
+
+</section>
+
+<!-- ================= PRODUCT LIST ================= -->
+<section class="product-list">
+
+  <h2 class="section-title">Чехлы Samsung Galaxy S25 Plus </h2>
+
+<div class="filter-bar">
+  <select>
+    <option>Samsung Galaxy S25 Plus</option>
+    <option>Samsung Galaxy S25 Ultra</option>
+    <option>Samsung Galaxy S26 Plus</option>
+    <option>Samsung Galaxy S26</option>
+    <option>Samsung Galaxy Z Fold7</option>
+    <option>Samsung Galaxy Z Flip7</option>
+    <option>Samsung Galaxy Z Fold6</option>
+    <option>Samsung Galaxy Z Flip6</option>
+    <option>Samsung Galaxy S26 Ultra</option>
+    <option>Samsung Galaxy S25</option>
+  </select>
+</div>
+
+
+ <div class="products-grid">
+
+ 
+   <!-- PRODUCT -->
+ <div class="product-card"
+     data-name="600D Black/Grey (Twill)  "
+     data-price="59.99"
+     data-image="S25plus-classic-black-1_500x500.webp"
+     data-link="samsung-s25-ultra-black.html"
+     data-category="Ultra-slim">
+
+  <div class="product-image">
+    <img src="{% static 'pitaka/images/webp/S25plus-classic-black-1_500x500.webp' %}">>
+  </div>
+  <div class="product-meta">
+    <span> Samsung Galaxy S25 Plus ·  Ultra-slim</span>
+    <span class="price">$59.99</span>
+  </div>
+
+  <div class="product-title"> 600D Black/Grey (Twill)  </div>
+
+  <div class="product-actions">
+    <button class="btn-outline">Подробнее</button>
+    <button class="btn-solid">Купить</button>
+  </div>
+
+</div> 
+
+
+ <!-- PRODUCT -->
+ <div class="product-card"
+     data-name="Sunset "
+     data-price="59.99"
+     data-image="S25plus-sunset-1_500x500.webp"
+     data-link="samsung-s25-ultra-sun.html"
+     data-category="Ultra-slim">
+
+
+  <div class="product-image">
+    <img src="{% static 'pitaka/images/webp/S25plus-sunset-1_500x500.webp' %}">>
+  </div>
+
+  <div class="product-meta">
+    <span>Samsung Galaxy S25 Plus ·  Ultra-slim</span>
+    <span class="price">$59.99</span>
+  </div>
+
+  <div class="product-title"> Moment · Sunset </div>
+
+  <div class="product-actions">
+    <button class="btn-outline">Подробнее</button>
+    <button class="btn-solid">Купить</button>
+  </div>
+
+</div>
+
+  <!-- PRODUCT -->
+ <div class="product-card"
+     data-name="Moment · Moonrise "
+     data-price="59.99"
+     data-image="S25plus-moonrise-1_500x500.webp"
+     data-link="samsung-s25-ultra-moonrise.html"
+     data-category="Ultra-slim">
+
+  <div class="product-image">
+    <img src="{% static 'pitaka/images/webp/S25plus-moonrise-1_500x500.webp' %}">>
+  </div>
+
+  <div class="product-meta">
+    <span>Samsung Galaxy S25 Plus · Ultra-slim </span>
+    <span class="price">$59.99</span>
+  </div>
+
+  <div class="product-title"> Moment · Moonrise  </div>
+
+  <div class="product-actions">
+    <button class="btn-outline">Подробнее</button>
+    <button class="btn-solid">Купить</button>
+  </div>
+
+</div>
+
+
+
+</div>
+<h2 class="section-title accessories-title">Аксессуары для Samsung S25 Plus </h2>
+<div class="products-grid">
+<!--card 1-->
+<div class="product-card">
+
+<div class="product-image">
+<img src="{% static 'pitaka/images/webp/wallet-black-2_fad3e464-a8d6-42d7-96ed-62d6756d995b.webp' %}"> class="product-main-img">
+</div>
+
+<div class="product-colors">
+
+<img class="color-thumb active"
+src="black-grey-twill.svg"
+data-img="wallet-black-2_fad3e464-a8d6-42d7-96ed-62d6756d995b.webp">
+
+<img class="color-thumb"
+src="sunset.svg"
+data-img="wallet-sun-2_f19fdf40-c09a-4f6f-b6e0-a26d4930ff7f.webp">
+
+<img class="color-thumb"
+src="moonrise.svg"
+data-img="wallet-moon-2_6b6a4bbe-7414-4c8a-be5b-47dadd08660d.webp">
+
+</div>
+
+<div class="product-meta">
+<span>$39.99</span>
+</div>
+
+<div class="product-title">
+Магнитный картхолдер 
+</div>
+
+</div>
+
+<!--card 2-->
+<div class="product-card">
+
+<div class="product-image">
+<img src="{% static 'pitaka/images/webp/bank-black-1.webp' %}"> class="product-main-img">
+</div>
+
+<div class="product-colors">
+
+<img class="color-thumb active"
+src="black-grey-twill.svg"
+data-img="bank-black-1.webp">
+
+<img class="color-thumb"
+src="moonrise.svg"
+data-img="bank-moon-1.webp">
+
+<img class="color-thumb"
+src="sunset.svg"
+data-img="bank-sun-1.webp">
+
+<img class="color-thumb"
+src="lucid-blue.avif"
+data-img="power-bank-glint-blue_3_464a6fd3-0184-4737-bea6-c2f02a34e84d.webp">
+
+<img class="color-thumb"
+src="golden-glint.avif"
+data-img="power-bank-glint-gold_2_6a381353-1243-45fa-9254-b9979929abb1.webp">
+
+</div>
+
+<div class="product-meta">
+<span>$39.99</span>
+</div>
+
+<div class="product-title">
+Магнитный повербанк 
+</div>
+
+</div>
+
+<!--card 3-->
+<div class="product-card">  
+
+<div class="product-image">
+<img src="{% static 'pitaka/images/webp/grip3-black-3.webp' %}"> class="product-main-img">
+</div>
+
+<div class="product-colors">
+
+<img class="color-thumb active"
+src="600d-black-grey-twill.svg"
+data-img="grip3-black-3.webp">
+
+<img class="color-thumb"
+src="moonrise.svg"
+data-img="grip3-moonrise-3.webp">
+
+<img class="color-thumb"
+src="sunset.svg"
+data-img="grip3-sunset-3.webp">
+
+<img class="color-thumb"
+src="lucid-blue.avif"
+data-img="grip3-blue_7cc9e852-238d-46b1-93e5-26ce1bf012bf.webp">
+
+<img class="color-thumb"
+src="golden-glint.avif"
+data-img="grip3-gold-3_86599ee4-b2e5-468c-a7a0-7dcaf050777b.webp">
+
+<img class="color-thumb"
+src="ocean-blue.webp"
+data-img="grip3-blue-3_f012819a-c40c-4225-a86c-8ae1314f3e47.webp">
+
+<img class="color-thumb"
+src="forest-green.webp"
+data-img="grip3-green-3_41f2c7a7-a090-43f8-acf3-609788df2d36.webp">
+
+</div>
+
+<div class="product-meta">
+<span>$39.99</span>
+</div>
+
+<div class="product-title">
+Магнитный держатель-кольцо
+</div>
+
+</div>
+<!--card 4-->
+<div class="product-card">
+
+<div class="product-image">
+<img src="{% static 'pitaka/images/webp/card-carbon-fiber-watch-band-galaxy-watch.webp' %}"> class="product-main-img">
+</div>
+
+<div class="product-meta">
+<span>$39.99</span>
+</div>
+
+<div class="product-title">
+Карбоновый ремешок для Galaxy Watch
+</div>
+
+</div>
+
+
+<!--card 5-->
+<div class="product-card">
+
+<div class="product-image">
+<img src="{% static 'pitaka/images/webp/phone-strap-forest-1.webp' %}"> class="product-main-img">
+</div>
+
+<div class="product-colors">
+
+<img class="color-thumb active"
+src="forest-green.webp"
+data-img="phone-strap-forest-1.webp">
+
+<img class="color-thumb"
+src="black.svg"
+data-img="phone-strap-black-1.webp">
+
+<img class="color-thumb"
+src="ocean-blue.webp"
+data-img="phone-strap-ocean-1.webp">
+
+<img class="color-thumb"
+src="canyon-yellow.webp"
+data-img="phone-strap-canyon-1.webp">
+</div>
+
+<div class="product-meta">
+<span>$39.99</span>
+</div>
+
+<div class="product-title">
+Ремешок для телефона 3 в 1
+</div>
+
+</div>
+<!--card 6-->
+<div class="product-card">
+
+<div class="product-image">
+<img src="{% static 'pitaka/images/webp/card-car-mount-2.webp' %}"> class="product-main-img">
+</div>
+
+<div class="product-colors">
+
+<img class="color-thumb active"
+src="black-grey-twill.svg"
+data-img="card-car-mount-2.webp">
+
+</div>
+
+<div class="product-meta">
+<span>$39.99</span>
+</div>
+
+<div class="product-title">
+Автомобильный держатель MagEZ Pro 2 Qi2
+</div>
+
+</div>
+
+</div>
+<section class="why-pitaka">
+
+<h2 class="why-title">Почему чехлы PITAKA для Samsung S26 Ultra?</h2>
+
+<p class="why-subtitle">
+Когда технологии становятся частью структуры, а дизайн возвращается к своему смыслу — жизнь становится легче.
+</p>
+
+<div class="why-grid">
+
+<div class="why-card">
+<img src="{% static 'pitaka/images/webp/colllection-fold7-feature-1.webp' %}">>
+<h3>Материалы</h3>
+<p>
+Лёгкость начинается с продуманного дизайна и правильного выбора материалов. 
+Передовые технологии плетения арамидного волокна дают дизайнерам настоящую свободу.
+</p>
+</div>
+
+<div class="why-card">
+<img src="{% static 'pitaka/images/webp/colllection-i17promax-feature-2.webp' %}">>
+<h3>Минимализм</h3>
+<p>
+Наша философия дизайна проста — убрать всё лишнее и оставить только главное. 
+Каждая деталь имеет своё предназначение.
+</p>
+</div>
+
+<div class="why-card">
+<img src="{% static 'pitaka/images/webp/colllection-fold7-feature-3.webp' %}">>
+<h3>Экологичность</h3>
+<p>
+Мы уменьшаем нагрузку на планету, создавая долговечные продукты, 
+которые можно перерабатывать и использовать повторно.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<div class="order-modal" id="orderModal">
+  <div class="order-box">
+
+    <h2>Ваши заказы</h2>
+
+    <div class="order-product">
+      <img id="orderImage">
+      <div>
+        <b id="orderName"></b>
+        <div id="orderPrice"></div>
+      </div>
+    </div>
+
+    <div class="order-sum">
+      Сумма: <span id="orderTotal"></span>
+    </div>
+
+<!-- Количество -->
+<label>Количество</label>
+<input id="orderQty" type="number" min="1" value="1">
+
+<!-- Модель телефона -->
+<label>Модель телефона</label>
+<select id="phoneModel">
+    <option>Samsung Galaxy S25 Plus</option>
+    <option>Samsung Galaxy S26 Ultra</option>
+    <option>Samsung Galaxy S26 Plus</option>
+    <option>Samsung Galaxy S26</option>
+    <option>Samsung Galaxy Z Fold7</option>
+    <option>Samsung Galaxy Z Flip7</option>
+    <option>Samsung Galaxy Z Fold6</option>
+    <option>Samsung Galaxy Z Flip6</option>
+    <option>Samsung Galaxy S25 Ultra</option>
+    <option>Samsung Galaxy S25</option>
+</select>
+
+<hr>
+
+<input id="customerName" placeholder="Ваше имя">
+<input id="customerPhone" placeholder="+996 ___ ___ ___">
+<input id="customerEmail" placeholder="Ваш e-mail">
+
+
+    <button id="sendOrderBtn">Заказать</button>
+    <button class="close-modal">Закрыть</button>
+
+  </div>
+</div>
+
+<!-- ================= JS ================= -->
+ <!-- ================= JS ================= -->
+<script src="menu-loader.js"></script>
+<script src="menu-interaction.js"></script>
+
+
+
+ <script>
+let currentProduct = {};
+
+/* КЛИКИ ПО КНОПКАМ */
+document.addEventListener("click", function(e) {
+
+  /* ПОДРОБНЕЕ */
+  if (e.target.classList.contains("btn-outline")) {
+    const card = e.target.closest(".product-card");
+    const link = card.dataset.link;
+    if (link) window.location.href = link;
+  }
+
+  /* КУПИТЬ */
+  if (e.target.classList.contains("btn-solid")) {
+    const card = e.target.closest(".product-card");
+
+  currentProduct = {
+  name: card.dataset.name,
+  price: Number(card.dataset.price),
+  image: card.dataset.image,
+  category: card.dataset.category
+};
+
+
+    orderName.innerText  = currentProduct.name;
+    orderPrice.innerText = "$" + currentProduct.price;
+    orderTotal.innerText = "$" + currentProduct.price;
+    orderImage.src = currentProduct.image;
+
+    orderModal.classList.add("active");
+  }
+
+  /* ЗАКРЫТЬ */
+  if (e.target.classList.contains("close-modal")) {
+    orderModal.classList.remove("active");
+  }
+});
+
+/* ОТПРАВКА В WHATSAPP */
+sendOrderBtn.onclick = function () {
+
+  const name  = customerName.value.trim();
+  const phone = customerPhone.value.trim();
+  const email = customerEmail.value.trim();
+  const qty   = Number(orderQty.value);
+const model = phoneModel.value;
+
+
+  if (!name || !phone) {
+    alert("Введите имя и телефон");
+    return;
+  }
+
+  const managerPhone = "996500770777"; // ← ТУТ НОМЕР МЕНЕДЖЕРА
+
+const total = currentProduct.price * qty;
+
+const text = `
+🛒 Новый заказ
+
+Товар: ${currentProduct.name}
+Категория: ${currentProduct.category}
+Модель: ${model}
+Количество: ${qty}
+Цена за 1 шт: $${currentProduct.price}
+Сумма: $${total}
+
+Имя: ${name}
+Телефон: ${phone}
+Email: ${email}
+`;
+
+
+  window.open(
+    "https://wa.me/" + managerPhone + "?text=" + encodeURIComponent(text),
+    "_blank"
+  );
+};
+</script>
+
+<script>
+let filterButtons = [];
+let products = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  filterButtons = document.querySelectorAll(".type-card");
+  products = document.querySelectorAll(".product-card");
+  const showAllBtn = document.getElementById("showAllBtn");
+
+  // ФИЛЬТРЫ
+  filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+      // активная кнопка
+      filterButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const filter = btn.dataset.filter;
+
+      products.forEach(card => {
+        const category = card.dataset.category;
+
+        if (category === filter) {
+          card.style.display = "";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+  });
+
+  // КНОПКА "ПОКАЗАТЬ ВСЕ"
+  showAllBtn.addEventListener("click", () => {
+    products.forEach(card => {
+      card.style.display = "";
+    });
+
+    filterButtons.forEach(b => b.classList.remove("active"));
+  });
+
+});
+</script>
+
+
+<button id="showAllBtn" class="show-all-btn">
+  Показать все товары
+</button>
+
+
+
+
+<!-- ================= FAQ ================= -->
+<section class="faq-section">
+
+<h2 class="faq-title">Часто задаваемые вопросы</h2>
+
+<!-- 1 -->
+<div class="faq-item">
+  <div class="faq-question">Что такое Aaron Button? <span>›</span></div>
+  <div class="faq-answer">
+    Aaron Button — это три умные кнопки быстрого доступа.  
+    Благодаря встроенной памяти и поддержке NFC они позволяют запускать сложные команды,
+    управлять устройствами и взаимодействовать с IoT.  
+    Одно нажатие превращается в быстрый и удобный способ управления повседневными задачами.
+  </div>
+</div>
+
+<!-- 2 -->
+<div class="faq-item">
+  <div class="faq-question">Чем Aaron Button отличается от PinButton? <span>›</span></div>
+  <div class="faq-answer">
+    PinButton эволюционировал в Aaron Button.  
+    Название дано в честь Аарона Шварца и отражает идею свободы информации и эффективности.
+
+    Благодаря расширенной памяти Aaron Button поддерживает:
+    • управление IoT  
+    • сценарии действий  
+    • сложные команды  
+
+    В сочетании с приложением Aaron Button вы можете:
+    • импортировать команды  
+    • объединять действия  
+    • настраивать всё под себя  
+
+    Теперь это не просто кнопка, а полноценный центр управления.
+  </div>
+</div>
+
+<!-- 3 -->
+<div class="faq-item">
+  <div class="faq-question">Почему у чехла полностью открытая зона камеры? <span>›</span></div>
+  <div class="faq-answer">
+    Многие пользователи используют защитные стекла для камеры.  
+    Поэтому мы сделали полностью открытый модуль камеры,
+    чтобы вы могли легко использовать любые защитные аксессуары.
+  </div>
+</div>
+
+<!-- 4 -->
+<div class="faq-item">
+  <div class="faq-question">Есть ли Aaron Button в чехлах серии S26? <span>›</span></div>
+  <div class="faq-answer">
+    Да, каждый чехол серии S26 оснащён тремя кнопками Aaron Button.
+  </div>
+</div>
+
+<!-- 5 -->
+<div class="faq-item">
+  <div class="faq-question">Какой срок службы у кнопок Aaron Button? <span>›</span></div>
+  <div class="faq-answer">
+    Срок службы зависит от использования,  
+    но по тестам каждая кнопка выдерживает до 100 000 нажатий.
+  </div>
+</div>
+
+<!-- 6 -->
+<div class="faq-item">
+  <div class="faq-question">Совместим ли чехол с защитой камеры? <span>›</span></div>
+  <div class="faq-answer">
+    Да, чехол совместим с отдельными защитными стеклами для камеры.  
+    Однако он не подходит для цельных (монолитных) защитных стекол.
+  </div>
+</div>
+
+<!-- 7 -->
+<div class="faq-item">
+  <div class="faq-question">Насколько выступает рамка камеры? <span>›</span></div>
+  <div class="faq-answer">
+    • S26 Ultra — около 0.6 мм  
+    • S26 / S26+ — около 1 мм
+  </div>
+</div>
+
+<!-- 8 -->
+<div class="faq-item">
+  <div class="faq-question">Это полностью закрытый чехол? <span>›</span></div>
+  <div class="faq-answer">
+    Нет. Кнопки и разъёмы остаются открытыми  
+    для удобства использования.
+  </div>
+</div>
+
+<!-- 9 -->
+<div class="faq-item">
+  <div class="faq-question">Насколько чехол выступает над экраном? <span>›</span></div>
+  <div class="faq-answer">
+    • Углы — примерно 0.5–0.6 мм  
+    • Боковые грани — примерно 0.3–0.4 мм  
+
+    Нижняя часть специально ниже экрана,
+    чтобы чехол было легче снимать.
+  </div>
+</div>
+
+<!-- 10 -->
+<div class="faq-item">
+  <div class="faq-question">Какие модели и цвета доступны для Cairn Case? <span>›</span></div>
+  <div class="faq-answer">
+    На данный момент Cairn Case доступен только для S26 Ultra.
+
+    Цвета:
+    • Black/Grey  
+    • Sunset  
+    • Moonrise
+  </div>
+</div>
+
+</section>
+
+</main>
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+
+<!-- ===== SERVICE ICONS ===== -->
+<!-- ===== SUBSCRIBE ===== -->
+<div class="footer-subscribe">
+
+<p>Подпишитесь и получите скидку 10% на первый заказ</p>
+
+<form class="subscribe-form">
+<input type="email" placeholder="Введите ваш email">
+<button>→</button>
+</form>
+
+</div>
+
+<div class="footer-line"></div>
+
+<!-- ===== SERVICE ICONS ===== -->
+<div class="footer-services">
+
+<div class="footer-service">
+<img src="{% static 'pitaka/images/png/d-011.png' %}">>
+<p>Доставка по всему Кыргызстану</p>
+</div>
+
+<div class="footer-service">
+<img src="{% static 'pitaka/images/png/d-012.png' %}">>
+<p>Покупка без риска</p>
+</div>
+
+<div class="footer-service">
+<img src="{% static 'pitaka/images/png/d-013.png' %}">>
+<p>30 дней на возврат</p>
+</div>
+
+<div class="footer-service">
+<img src="{% static 'pitaka/images/png/d-014.png' %}">>
+<p>Безопасная оплата</p>
+</div>
+
+</div>
+
+<div class="footer-line"></div>
+
+
+<!-- ===== LINKS ===== -->
+<div class="footer-grid">
+
+<div class="footer-col">
+<h4>Поддержка</h4>
+
+<a href="#">Связаться с нами</a>
+<a href="#">Частые вопросы</a>
+<a href="#">Доставка</a>
+<a href="#">Возврат</a>
+
+</div>
+
+
+<div class="footer-col">
+<h4>Компания</h4>
+
+<a href="#">О нас</a>
+<a href="#">Блог</a>
+<a href="#">Партнёры</a>
+<a href="#">Контакты</a>
+
+</div>
+
+
+<div class="footer-col">
+<h4>Покупателям</h4>
+
+<a href="#">Гарантия</a>
+<a href="#">Политика конфиденциальности</a>
+<a href="#">Условия использования</a>
+<a href="#">Оплата</a>
+
+</div>
+
+
+<div class="footer-col">
+<h4>Социальные сети</h4>
+
+<div class="social-links">
+
+<a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+
+<a href="#"><i class="fa-brands fa-telegram"></i></a>
+
+<a href="#"><i class="fa-brands fa-instagram"></i></a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ===== BOTTOM ===== -->
+<div class="footer-bottom">
+
+<div class="footer-left">
+
+Мы являемся официальным дистрибьютором PITAKA
+в Кыргызской Республике.
+
+</div>
+
+
+<div class="footer-center">
+
+<img src="{% static 'pitaka/images/logo_white.svg' %}">>
+
+</div>
+
+
+<div class="footer-right">
+
+© 2026 PITAKA. Все права защищены.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+document.querySelectorAll(".color-thumb").forEach(thumb=>{
+thumb.addEventListener("click",function(){
+
+const card = this.closest(".product-card");
+const img = card.querySelector(".product-main-img");
+
+img.src = this.dataset.img;
+
+card.querySelectorAll(".color-thumb").forEach(t=>t.classList.remove("active"));
+this.classList.add("active");
+
+});
+});
+
+</script>
+
+<script>
+
+const btn = document.getElementById("comparisonToggle");
+const extra = document.getElementById("comparison-extra");
+
+if(btn && extra){
+btn.addEventListener("click", () => {
+
+extra.classList.toggle("open");
+
+if(extra.classList.contains("open")){
+btn.innerText = "Смотреть меньше информации";
+}else{
+btn.innerText = "Смотреть больше информации";
+}
+
+});
+}
+
+</script>
+<script>
+
+document.querySelectorAll(".faq-question").forEach(question => {
+
+  question.addEventListener("click", () => {
+
+    const item = question.parentElement;
+
+    item.classList.toggle("active");
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>

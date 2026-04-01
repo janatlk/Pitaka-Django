@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Product</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<!-- HEADER MENU -->
+<div id="menu"></div>
+
+<!-- PRODUCT PAGE -->
+<main class="product-page">
+
+  <div class="product-container">
+
+    <div class="product-gallery">
+      <img id="productImage" src="" alt="">
+    </div>
+
+    <div class="product-info">
+
+      <h1 id="productTitle">Loading...</h1>
+
+      <p class="product-price" id="productPrice"></p>
+
+      <p class="product-desc" id="productDesc"></p>
+
+      <button class="btn-add-cart" id="addToCart">
+        Добавить в корзину
+      </button>
+
+    </div>
+
+  </div>
+
+</main>
+
+<!-- JS -->
+<script src="menu-loader.js"></script>
+<script src="product.js"></script>
+
+</body>
+</html>

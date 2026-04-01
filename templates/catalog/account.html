@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | PITAKA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <a href="index.html" class="logo">
+    <img src="{% static 'pitaka/images/logo_black.svg' %}">>
+  </a>
+</header>
+
+<main class="account">
+  <h1 id="title">Вход</h1>
+
+  <button class="shop-btn">Войти через Shop</button>
+
+  <div class="or">или</div>
+
+  <form id="form">
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Пароль" required>
+
+    <a href="#" class="forgot">Забыли пароль?</a>
+
+    <button type="submit" class="black-btn">Войти</button>
+  </form>
+
+  <button class="outline-btn" id="switch">Создать аккаунт</button>
+
+  <p class="error" id="error"></p>
+
+  <div class="profile hidden" id="profile">
+    <h2>Вы вошли в аккаунт</h2>
+    <p id="userEmail"></p>
+    <button class="black-btn" id="logout">Выйти</button>
+  </div>
+</main>
+<script src="account.js"></script>
+
+</body>
+</html>

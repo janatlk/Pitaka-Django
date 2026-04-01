@@ -1,0 +1,14 @@
+# Django Framework
+Django==5.0.2
+
+# Image processing
+Pillow==10.2.0
+
+# Environment variables
+python-decouple==3.8
+
+# PostgreSQL (for production - optional for development)
+# psycopg2-binary==2.9.9
+
+# Development
+django-extensions==3.2.3

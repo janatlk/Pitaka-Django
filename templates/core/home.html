@@ -1,0 +1,506 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}PITAKA - Премиальные чехлы из арамидного волокна{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/menu.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- ================= HERO TEXT BLOCK ================= -->
+<section class="hero-text-block">
+  <h1>Живи каждым моментом.</h1>
+  <p>
+   Создано из высокотехнологичных материалов и продуманного дизайна.
+   PITAKA меняет подход к повседневным вещам — делая их лёгкими и точными.
+  </p>
+  <a href="#" class="outline-btn">О философии бренда</a>
+</section>
+
+<!-- ================= HERO SLIDER ================= -->
+<section class="hero-slider" aria-roledescription="carousel" aria-label="Главный слайдер">
+  <div class="slides">
+    <!-- Slide 1: Samsung S26 -->
+    <div class="slide active slide-s26">
+      <div class="hero-inner">
+        <div class="hero-left-block">
+          <h1>Подберите идеальное сочетание</h1>
+          <p>Коллекции чехлов для Galaxy S26</p>
+          <a href="{% url 'catalog:device_list' 'samsung' %}" class="hero-btn-yellow">Купить сейчас</a>
+        </div>
+        <div class="hero-right-block">
+          <img src="{% static 'pitaka/images/png/s26w (1)-Photoroom.png' %}" alt="Galaxy S26 Cases">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: iPhone 17 -->
+    <div class="slide" style="background-image:url('{% static 'pitaka/images/png/image-Photoroom.png' %}')">
+      <div class="slide-content hero-left">
+        <h1>Найди свой стиль</h1>
+        <p>Для iPhone 17/16 Pro серии и iPhone Air</p>
+        <a href="{% url 'catalog:catalog' %}?design=Amber" class="btn-hero">Предзаказ</a>
+      </div>
+    </div>
+
+    <!-- Slide 3: AirPods Pro 3 -->
+    <div class="slide" style="background-image:url('{% static 'pitaka/images/png/img3.png' %}')">
+      <div class="slide-content hero-left hero-light">
+        <h1>Два материала. Единая элегантность.</h1>
+        <p class="hero-sub">
+          Гармония тактильных ощущений и технологий.<br>
+          Чехол из арамидного волокна для AirPods Pro 3
+        </p>
+        <a href="{% url 'catalog:device_list' 'airpods' %}" class="btn-hero-yellow">Купить сейчас</a>
+      </div>
+    </div>
+
+    <!-- Slide 4: Fold 7 -->
+    <div class="slide" style="background-image:url('{% static 'pitaka/images/png/img4.png' %}')">
+      <div class="slide-content hero-left light">
+        <h1>Невероятно тонкий и лёгкий</h1>
+        <p>Для Samsung Galaxy Z Fold7 и Flip7</p>
+        <a href="{% url 'catalog:catalog' %}?series=ultra-slim" class="btn-shop-yellow">Купить сейчас</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider-dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+</section>
+
+<!-- ================= BEST SELLERS ================= -->
+<section class="best-sellers">
+  <div class="bs-header">
+    <h2 class="active" data-tab="bestsellers">Хиты Продаж</h2>
+    <h2 data-tab="new">Новинки</h2>
+  </div>
+
+  <div class="bs-line"></div>
+
+  <div class="bs-grid">
+    <!-- Best Sellers Tab -->
+    <div class="bs-products active" id="bestsellers">
+      {% for product in best_sellers %}
+      <div class="bs-card">
+        <div class="bs-img">
+          {% if product.images.first %}
+          <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+          {% else %}
+          <img src="{% static 'pitaka/images/webp/placeholder.webp' %}" alt="{{ product.name }}">
+          {% endif %}
+        </div>
+        <div class="bs-meta">
+          <span>{{ product.device_model }}</span>
+          <span class="badge">{{ product.get_series_display }}</span>
+        </div>
+        <h3>{{ product.design_name }}</h3>
+        <p class="price">{{ product.get_price_display }}</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- New Arrivals Tab -->
+    <div class="bs-products" id="new">
+      {% for product in new_arrivals %}
+      <div class="bs-card">
+        <div class="bs-img">
+          {% if product.images.first %}
+          <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+          {% else %}
+          <img src="{% static 'pitaka/images/webp/placeholder.webp' %}" alt="{{ product.name }}">
+          {% endif %}
+        </div>
+        <div class="bs-meta">
+          <span>{{ product.device_model }}</span>
+          <span class="badge new">NEW</span>
+        </div>
+        <h3>{{ product.design_name }}</h3>
+        <p class="price">{{ product.get_price_display }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPLORE STYLES ================= -->
+<section class="explore">
+  <div class="explore-head">
+    <h2>Исследуйте стили</h2>
+    <p>
+      Fusion Weaving сочетает защиту и элегантность.
+      Премиальное арамидное волокно, лёгкость и утончённая текстура.
+    </p>
+    <a href="#" class="outline-btn">Смотреть все</a>
+  </div>
+
+  <div class="explore-grid">
+    <div class="explore-card" style="background-image:url('{% static 'pitaka/images/webp/index-custom-section9-amber.webp' %}')">
+      <div class="explore-text">
+        <h3>Праздничное<br>настроение</h3>
+        <span>Amber</span>
+      </div>
+      <a href="{% url 'catalog:catalog' %}?design=Amber" class="explore-btn">Подробнее</a>
+    </div>
+
+    <div class="explore-card" style="background-image:url('{% static 'pitaka/images/webp/index-custom-section9-indigo.webp' %}')">
+      <div class="explore-text">
+        <h3>Праздничное<br>настроение</h3>
+        <span>Indigo</span>
+      </div>
+      <a href="{% url 'catalog:catalog' %}?design=Indigo" class="explore-btn">Подробнее</a>
+    </div>
+
+    <div class="explore-card" style="background-image:url('{% static 'pitaka/images/webp/index-custom-section9-golden-green.webp' %}')">
+      <div class="explore-text">
+        <h3>Основная серия<br>PITAKA Monogram</h3>
+        <span>Golden Green</span>
+      </div>
+      <a href="{% url 'catalog:catalog' %}?design=Golden" class="explore-btn">Подробнее</a>
+    </div>
+
+    <div class="explore-card" style="background-image:url('{% static 'pitaka/images/webp/index-custom-section9-golden-red.webp' %}')">
+      <div class="explore-text">
+        <h3>Основная серия<br>PITAKA Monogram</h3>
+        <span>Golden Red</span>
+      </div>
+      <a href="{% url 'catalog:catalog' %}?design=Golden" class="explore-btn">Подробнее</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COLLECTIONS ================= -->
+<section class="collections">
+  <div class="collections-head">
+    <h2>Стиль по коллекциям</h2>
+    <p>
+      Завершите образ аксессуарами, созданными для гармонии
+      и эстетики в каждой детали.
+    </p>
+  </div>
+
+  <div class="collections-banner" style="background-image: url('{% static 'pitaka/images/webp/index-custom-section10.webp' %}')">
+    <div class="collections-text">
+      <h3>
+        Коллекция Sunset,<br>
+        Украсьте свою жизнь
+      </h3>
+      <a href="{% url 'catalog:catalog' %}?design=Sunset" class="btn-shop-yellow">Подробнее</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PINBUTTON ================= -->
+<section class="pinbutton">
+  <div class="pinbutton-head">
+    <h2>PinButton Cases</h2>
+  </div>
+
+  <div class="pinbutton-row">
+    <div class="pinbutton-text">
+      <h3>
+        Встроенная кнопка быстрого доступа<br>
+        прямо в арамидном чехле — мгновенный запуск<br>
+        нужных функций.
+      </h3>
+      <p class="pin-sub">
+        Уже доступно для Samsung S25.
+      </p>
+      <a href="{% url 'catalog:catalog' %}" class="outline-btn">Подробнее</a>
+    </div>
+
+    <div class="pinbutton-video">
+      <video autoplay muted loop playsinline>
+        <source src="{% static 'pitaka/videos/index-custom-section56-video.mp4' %}" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SUMMA ================= -->
+<section class="summa">
+  <div class="summa-head">
+    <h2>Чехол Ultra-Slim</h2>
+  </div>
+
+  <div class="summa-row">
+    <div class="summa-text">
+      <h3>
+        Бесшовное сочетание<br>
+        арамидного волокна<br>
+        и TPU — защита,<br>
+        доведённая до<br>
+        совершенства.
+      </h3>
+      <p>Шедевр дизайна и технологий.</p>
+      <a href="{% url 'catalog:catalog' %}?series=ultra-slim" class="outline-btn">Подробнее</a>
+    </div>
+
+    <div class="summa-video">
+      <video src="{% static 'pitaka/videos/index-custom-section57-video.mp4' %}" autoplay muted loop playsinline></video>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TECHNOLOGIES ================= -->
+<section class="technologies">
+  <div class="tech-head">
+    <h2>Наши технологии</h2>
+    <p>
+      Многолетний опыт PITAKA позволяет постоянно совершенствовать
+      технологии и создавать лучшие решения.
+      Мы принимаем вызовы и превращаем их в инновации.
+    </p>
+  </div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <img src="{% static 'pitaka/images/webp/index-custom-section6-1.webp' %}" alt="Cadmyra">
+      <h3>Cadmyra™</h3>
+      <p>Прочный и износостойкий, при этом мягкий как ткань и приятный на ощупь.</p>
+    </div>
+
+    <div class="tech-card">
+      <img src="{% static 'pitaka/images/webp/index-custom-section6-2.webp' %}" alt="PitaTap">
+      <h3>PitaTap™</h3>
+      <p>Кнопка управления камерой без потери чувствительности.</p>
+    </div>
+
+    <div class="tech-card">
+      <img src="{% static 'pitaka/images/webp/index-custom-section6-3.webp' %}" alt="SlimBoard">
+      <h3>SlimBoard™</h3>
+      <p>Технология без клея делает чехлы легче, тоньше и экологичнее.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GO GREEN ================= -->
+<section class="go-green">
+  <div class="green-head">
+    <h2>Забота об окружающей среде.</h2>
+    <p>
+      Мы внедряем новую экологическую стратегию
+      в рамках долгосрочного развития и ESG-подхода.
+    </p>
+  </div>
+
+  <div class="green-body">
+    <div class="green-slider">
+      <div class="green-slides">
+        <div class="green-slide active">
+          <img src="{% static 'pitaka/images/webp/index-custom-section11-1.webp' %}" alt="PitaCare">
+          <span class="green-logo">PitaCare</span>
+        </div>
+
+        <div class="green-slide">
+          <img src="{% static 'pitaka/images/webp/index-custom-section11-2.webp' %}" alt="Eco process">
+          <span class="green-logo">PitaCare</span>
+        </div>
+
+        <div class="green-slide">
+          <img src="{% static 'pitaka/images/webp/index-custom-section11-3.webp' %}" alt="Eco partner">
+          <span class="green-logo">PitaCare</span>
+        </div>
+      </div>
+
+      <div class="green-dots">
+        <span class="gdot active"></span>
+        <span class="gdot"></span>
+        <span class="gdot"></span>
+      </div>
+    </div>
+
+    <div class="green-links">
+      <a href="#" class="green-item">
+        <span>01 Экологичный процесс</span>
+        <span class="arrow">»</span>
+      </a>
+
+      <a href="#" class="green-item">
+        <span>02 Упаковка из багассы</span>
+        <span class="arrow">»</span>
+      </a>
+
+      <a href="#" class="green-item">
+        <span>03 Экологичные партнёры</span>
+        <span class="arrow">»</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WEAVE ================= -->
+<section class="weave">
+  <div class="weave-head">
+    <h2>Мы создаём плетением.</h2>
+    <p>Плетение — это не стиль. Это язык.</p>
+  </div>
+
+  <div class="weave-video">
+    <video autoplay muted loop playsinline>
+      <source src="{% static 'pitaka/videos/index-2025-section4-video.mp4' %}" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<!-- ================= SERVICE SECTION ================= -->
+<section class="service-section">
+  <div class="service-grid">
+    <a href="shipping.html" class="service-item">
+      <img src="{% static 'pitaka/images/svg/index-custom-section7-1.svg' %}" alt="Доставка">
+      <h4>Доставка по всему Кыргызстану</h4>
+      <span class="service-read">Читать</span>
+    </a>
+
+    <a href="purchase.html" class="service-item">
+      <img src="{% static 'pitaka/images/svg/index-custom-section7-2.svg' %}" alt="Покупка">
+      <h4>Покупка без риска</h4>
+      <span class="service-read">Читать</span>
+    </a>
+
+    <a href="returns.html" class="service-item">
+      <img src="{% static 'pitaka/images/svg/index-custom-section7-3.svg' %}" alt="Возврат">
+      <h4>30 дней на возврат</h4>
+      <span class="service-read">Читать</span>
+    </a>
+
+    <a href="payments.html" class="service-item">
+      <img src="{% static 'pitaka/images/svg/index-custom-section7-4.svg' %}" alt="Оплата">
+      <h4>100% безопасная оплата</h4>
+      <span class="service-read">Читать</span>
+    </a>
+  </div>
+</section>
+
+<!-- ================= REVIEWS SLIDER ================= -->
+<section class="reviews">
+  <div class="reviews-inner">
+    <div class="reviews-slider">
+      <div class="review active">
+        <p>
+          Задняя панель чехла PinButton выполнена из классического
+          арамидного волокна — выглядит технологично, ощущается премиально,
+          обеспечивает уверенный хват и при этом остаётся невероятно
+          тонкой и лёгкой.
+        </p>
+        <img src="{% static 'pitaka/images/webp/index-social-media-1.webp' %}" alt="PhoneArena">
+      </div>
+
+      <div class="review">
+        <p>
+          PITAKA снова доказывает, что минимализм и инновации могут
+          идеально сочетаться в одном продукте.
+        </p>
+        <img src="{% static 'pitaka/images/webp/index-social-media-2.webp' %}" alt="TechRadar">
+      </div>
+
+      <div class="review">
+        <p>
+          Ультратонкий профиль без компромиссов в защите —
+          именно это делает чехол по-настоящему особенным.
+        </p>
+        <img src="{% static 'pitaka/images/webp/index-social-media-3.webp' %}" alt="GadgetFlow">
+      </div>
+
+      <div class="review">
+        <p>
+          Премиальные материалы и продуманный дизайн выделяют его
+          среди конкурентов.
+        </p>
+        <img src="{% static 'pitaka/images/webp/index-social-media-4.webp' %}" alt="Forbes">
+      </div>
+
+      <div class="review">
+        <p>
+          Текстура плетения ощущается роскошно и при этом
+          сохраняет лёгкость устройства.
+        </p>
+        <img src="{% static 'pitaka/images/webp/index-social-media-5.webp' %}" alt="The Verge">
+      </div>
+
+      <div class="review">
+        <p>
+          Чехол для тех, кто ценит эстетику и инженерное совершенство.
+        </p>
+        <img src="{% static 'pitaka/images/webp/index-social-media-6.webp' %}" alt="TechCrunch">
+      </div>
+    </div>
+
+    <div class="review-dots"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-subscribe">
+    <p>Подпишитесь и получите скидку 10% на первый заказ</p>
+    <form action="#" method="post" class="subscribe-form">
+      <input type="email" placeholder="Введите ваш email" required>
+      <button type="submit">→</button>
+    </form>
+  </div>
+
+  <div class="footer-divider"></div>
+
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Связаться с нами</h4>
+      <a href="mailto:support@pitaka.kg">support@pitaka.kg</a>
+      <a href="tel:+996999999999">Позвонить: +996 (999) 999-99-99</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>О нас</h4>
+      <a href="#">О компании</a>
+      <a href="#">Блог</a>
+      <a href="#">Где купить</a>
+      <a href="#">Контакты</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Покупателям</h4>
+      <a href="#">Доставка</a>
+      <a href="#">Гарантия</a>
+      <a href="#">Возврат</a>
+      <a href="#">Политика конфиденциальности</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Социальные сети</h4>
+      <div class="social-links">
+        <a href="https://wa.me/996999999999" target="_blank" aria-label="WhatsApp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a href="https://t.me/pitaka_kg" target="_blank" aria-label="Telegram">
+          <i class="fa-brands fa-telegram"></i>
+        </a>
+        <a href="https://instagram.com/pitaka_kg" target="_blank" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-left">
+      <p>
+        Мы являемся официальным дистрибьютором PITAKA в Кыргызской Республике.<br>
+        PITAKA — зарегистрированная торговая марка What's To Carry Today Co., Limited.
+      </p>
+    </div>
+
+    <div class="footer-center">
+      <img src="{% static 'pitaka/images/logo_white.svg' %}" alt="PITAKA">
+    </div>
+
+    <div class="footer-right">
+      <p>© 2026 PITAKA. Все права защищены.</p>
+    </div>
+  </div>
+</footer>
+{% endblock %}

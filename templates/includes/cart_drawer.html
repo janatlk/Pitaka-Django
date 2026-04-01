@@ -1,0 +1,66 @@
+{% load static %}
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-head">
+        <h3>Корзина</h3>
+        <i class="fa-solid fa-xmark" id="closeCart"></i>
+    </div>
+    
+    <div class="cart-body">
+        {% if cart.item_count == 0 %}
+            <div class="cart-empty">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <p>Ваша корзина пуста</p>
+                <a href="{% url 'catalog:catalog' %}" class="btn-outline">
+                    Продолжить покупки
+                </a>
+            </div>
+        {% else %}
+            <div class="cart-items">
+                {% for item in cart.items_list %}
+                <div class="cart-item" data-item-id="{{ item.pk }}">
+                    <div class="cart-item-image">
+                        {% if item.product.images.first %}
+                        <img src="{{ item.product.images.first.image.url }}" alt="{{ item.product.name }}">
+                        {% else %}
+                        <img src="{% static 'images/placeholder.png' %}" alt="{{ item.product.name }}">
+                        {% endif %}
+                    </div>
+                    <div class="cart-item-info">
+                        <p class="cart-item-name">{{ item.product.device_model }}</p>
+                        <span class="cart-item-design">{{ item.product.design_name }}</span>
+                        <div class="cart-item-qty">
+                            {{ item.quantity }} шт.
+                        </div>
+                        <span class="cart-item-price">{{ item.subtotal_formatted }}</span>
+                    </div>
+                    <form action="{% url 'cart:remove' item.pk %}" method="post" class="cart-item-remove">
+                        {% csrf_token %}
+                        <button type="submit" class="remove-btn">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Итого:</span>
+                    <strong>{{ cart.total_formatted }}</strong>
+                </div>
+                
+                <a href="{{ whatsapp_url }}" target="_blank" class="btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Заказать через WhatsApp
+                </a>
+                
+                <form action="{% url 'cart:clear' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-outline btn-full">
+                        Очистить корзину
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+</div>

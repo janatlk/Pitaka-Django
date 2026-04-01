@@ -1,0 +1,44 @@
+{% load static %}
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>О PITAKA</h4>
+            <p>Премиальные аксессуары из арамидного волокна для ваших устройств</p>
+            <div class="social-links">
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#"><i class="fa-brands fa-telegram"></i></a>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Покупателям</h4>
+            <a href="#">Доставка и оплата</a>
+            <a href="#">Возврат и обмен</a>
+            <a href="#">Гарантия</a>
+            <a href="#">Контакты</a>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Категории</h4>
+            <a href="{% url 'catalog:device_list' 'iphone' %}">iPhone</a>
+            <a href="{% url 'catalog:device_list' 'samsung' %}">Samsung</a>
+            <a href="{% url 'catalog:device_list' 'ipad' %}">iPad</a>
+            <a href="{% url 'catalog:device_list' 'watch' %}">Apple Watch</a>
+            <a href="{% url 'catalog:device_list' 'airpods' %}">AirPods</a>
+        </div>
+        
+        <div class="footer-section">
+            <h4>Контакты</h4>
+            <p><i class="fa-solid fa-phone"></i> +7 (999) 123-45-67</p>
+            <p><i class="fa-solid fa-envelope"></i> info@pitaka.ru</p>
+            <p><i class="fa-brands fa-whatsapp"></i> Написать в WhatsApp</p>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2025 PITAKA. Все права защищены.</p>
+        <p>Не является публичной офертой</p>
+    </div>
+</footer>
