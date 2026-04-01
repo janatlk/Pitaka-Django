@@ -1,0 +1,672 @@
+/* ================= RESET ================= */
+body.menu-css {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
+  background: #f7f5f2;
+  color: #111;
+}
+
+/* ================= HEADER ================= */
+.menu-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 96px;
+  background: #f7f5f2;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+}
+
+.menu-header-inner {
+  width: 100%;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+ .menu-logo {
+  margin-left: 0;
+}
+
+
+/* LOGO */
+.menu-logo img {
+  height: 28px;
+}
+
+/* ================= NAV ================= */
+.menu-nav {
+  display: flex;
+  gap: 30px;
+  margin: 0 auto;
+}
+
+.menu-nav-item {
+  font-size: 14px;
+  color: #777;
+  cursor: pointer;
+}
+
+.menu-nav-item span {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+/* линия */
+.menu-nav-item span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: #000;
+  transition: width 0.25s ease;
+}
+
+/* hover */
+.menu-nav-item:hover span::after {
+  width: 100%;
+}
+
+/* active */
+.menu-nav-item.active {
+  color: #000;
+}
+
+.menu-nav-item.active span::after {
+  width: 100%;
+}
+
+
+
+/* ================= ICONS ================= */
+.menu-icons {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.menu-icon-item {
+  position: relative;
+  cursor: pointer;
+}
+
+.menu-icon-item i {
+  font-size: 18px;
+}
+
+/* CART COUNT */
+.menu-cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #000;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+/* DROPDOWN */
+.menu-dropdown {
+  position: absolute;
+  top: 34px;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  border-radius: 6px;
+  display: none;
+  min-width: 200px;
+  padding: 8px 0;
+}
+
+.menu-icon-item.support:hover .menu-dropdown {
+  display: block;
+}
+
+.menu-dropdown p {
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.menu-dropdown p:hover {
+  background: #f3f3f3;
+}
+
+/* ================= MEGA MENU ================= */
+.menu-mega {
+  position: fixed;
+  top: 96px;
+  left: 0;
+  width: 100%;
+  background: #f7f5f2;
+  display: none;
+  z-index: 2000;
+}
+
+.menu-mega.open {
+  display: block;
+}
+
+.menu-mega-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 50px 60px;
+}
+
+/* ================= SECTIONS ================= */
+.menu-mega-section {
+  display: none;
+  gap: 80px;
+}
+
+.menu-mega-section.active {
+  display: flex;
+}
+
+/* ================= LEFT TABS ================= */
+.menu-mega-left {
+  min-width: 180px;
+}
+
+.menu-mega-tab {
+  margin-bottom: 18px;
+  font-size: 14px;
+  color: #777;
+  cursor: pointer;
+  position: relative;
+  padding-bottom: 6px;
+}
+
+.menu-mega-tab.active {
+  color: #000;
+  font-weight: 500;
+}
+
+.menu-mega-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;     /* тонкая линия */
+  background: #000;
+}
+
+
+/* ================= CONTENT ================= */
+.menu-mega-content {
+  display: none;
+  gap: 80px;
+}
+
+.menu-mega-content.active {
+  display: flex;
+}
+
+.menu-mega-col {
+  min-width: 220px;
+}
+
+.menu-mega-col h4 {
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+.menu-model-item {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  position: relative;
+  width: fit-content;
+}
+
+.menu-model-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: #000;
+  transition: 0.2s ease;
+}
+
+.menu-model-item:hover::after {
+  width: 100%;
+}
+
+/* ================= SERIES ================= */
+.menu-series-grid {
+  display: flex;
+  gap: 40px;
+}
+
+.menu-series-card {
+  width: 200px;
+}
+
+.menu-series-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+}
+
+.menu-series-card h4 {
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.menu-series-card p {
+  font-size: 13px;
+  color: #777;
+}
+
+/* ================= STYLE ================= */
+.menu-style-left {
+  min-width: 160px;
+}
+
+.menu-style-link {
+  font-size: 14px;
+  color: #777;
+  cursor: pointer;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.menu-style-link.active {
+  color: #000;
+  font-weight: 500;
+}
+
+.menu-style-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;     /* тонкая линия */
+  background: #000;
+}
+
+
+.menu-style-content {
+  flex: 1;
+}
+
+.menu-style-grid {
+  display: none;
+  gap: 28px;
+}
+
+.menu-style-grid.active {
+  display: flex;
+}
+
+.menu-product-card {
+  width: 180px;
+  text-align: center;
+}
+
+.menu-product-card img {
+  width: 100%;
+  background: #eee;
+  padding: 20px;
+}
+
+.menu-product-title {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* ================= WATCH / MAGSAFE ================= */
+.menu-watch-left {
+  min-width: 200px;
+}
+
+.menu-watch-link {
+  font-size: 14px;
+  color: #777;
+  cursor: pointer;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.menu-watch-link.active {
+  color: #000;
+  font-weight: 500;
+}
+
+.menu-watch-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: #000;
+}
+
+.menu-watch-content {
+  flex: 1;
+}
+
+.menu-watch-grid {
+  display: none;
+  gap: 28px;
+}
+
+.menu-watch-grid.active {
+  display: flex;
+}
+
+/* ================= SEARCH ================= */
+.menu-search-overlay {
+  position: fixed;
+  inset: 0;
+  background: #f7f5f2;
+  display: none;
+  z-index: 9999;
+  padding: 60px;
+}
+
+.menu-search-overlay.active {
+  display: block;
+}
+
+.menu-search-top {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 10px;
+}
+
+.menu-search-top input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  outline: none;
+}
+
+.menu-search-tags {
+  margin-top: 30px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.menu-search-tags span {
+  background: #e6e3de;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.menu-search-results {
+  margin-top: 40px;
+}
+
+/* ================= CART DRAWER ================= */
+.menu-cart-drawer {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 380px;
+  height: 100%;
+  background: #f7f5f2;
+  box-shadow: -10px 0 30px rgba(0,0,0,.15);
+  transform: translateX(100%);
+  transition: .3s ease;
+  z-index: 9999;
+}
+
+.menu-cart-drawer.open {
+  transform: translateX(0);
+}
+
+.menu-cart-body {
+  padding: 40px;
+}
+
+.cart-head {
+  padding: 20px;
+  text-align: right;
+}
+
+/* ================= MEGA MENU LAYOUT ================= */
+
+.menu-mega-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 50px 60px;
+}
+
+/* секция = левая колонка + контент */
+.menu-mega-section {
+  display: none;
+  gap: 70px;
+  align-items: flex-start;
+}
+
+.menu-mega-section.active {
+  display: flex;
+}
+
+/* левая колонка (вкладки) */
+.menu-mega-left,
+.menu-watch-left,
+.menu-style-left {
+  min-width: 180px;
+  padding-right: 40px;
+}
+
+/* общий контейнер контента справа */
+.menu-mega-content,
+.menu-watch-content,
+.menu-style-content {
+  flex: 1;
+  padding-left: 40px;
+  border-left: 1px solid #ddd; /* вертикальная линия */
+}
+
+/* колонки внутри контента */
+.menu-mega-content.active {
+  display: flex;
+  gap: 90px;
+  align-items: flex-start;
+}
+
+/* карточные сетки (watch, style, magsafe) */
+.menu-watch-grid.active,
+.menu-style-grid.active {
+  display: flex;
+  gap: 32px;
+  flex-wrap: nowrap;
+}
+
+.menu-mega-col h4 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 18px;
+  color: #888;
+}
+
+/* ===== СПЕЦИАЛЬНО ДЛЯ PHONE (ещё ближе к левому краю) ===== */
+.menu-mega-section[data-menu="phone"] .menu-mega-left {
+  padding-right: 30px;
+  margin-left: -120px; /* было -20px */
+}
+
+
+/* контент ближе к линии */
+.menu-mega-section[data-menu="phone"] .menu-mega-content {
+  padding-left: 30px;
+}
+
+
+/* ===== ДЛЯ ВСЕХ ОСТАЛЬНЫХ ВКЛАДОК ===== */
+/* немного правее от края */
+.menu-mega-section[data-menu="tablet"] .menu-mega-left,
+.menu-mega-section[data-menu="watch"] .menu-watch-left,
+.menu-mega-section[data-menu="magsafe"] .menu-watch-left,
+.menu-mega-section[data-menu="accessories"] .menu-mega-left {
+  margin-left: 20px;
+}
+
+/* =========================
+   РАЗДЕЛИТЕЛИ ВЕРХНЕГО МЕНЮ
+   ========================= */
+
+.menu-nav {
+  display: flex;
+  align-items: center;
+}
+
+.menu-nav-item {
+  position: relative;
+  padding: 0 18px;
+}
+
+/* Вертикальная линия между вкладками */
+.menu-nav-item + .menu-nav-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 18px;
+  background: #cfcfcf;
+}
+
+.menu-model-item {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+}
+
+.badge-new {
+  color: #ff6a2a;
+  font-size: 10px;
+  margin-left: 6px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.menu-mega-col a {
+  display:block; /* важно */
+  position: relative;
+  padding-bottom: 3px;
+  text-decoration: none;
+  color: #000;
+}
+
+/* линия (по умолчанию скрыта) */
+.menu-mega-col a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: black;
+  transition: width 0.3s ease;
+}
+
+/* при наведении */
+.menu-mega-col a:hover::after {
+  width: 100%;
+}
+
+/* активная (всегда линия) */
+.menu-mega-col a.active::after {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+
+  /* уменьшаем header */
+  .menu-header {
+    height: 70px;
+  }
+
+  .menu-header-inner {
+    padding: 0 15px;
+  }
+
+  /* скрываем десктоп нав */
+  .menu-nav {
+    display: none;
+  }
+
+  /* mega меню */
+  .menu-mega-inner {
+    padding: 20px;
+  }
+
+  .menu-mega-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* убираем левое меню */
+  .menu-mega-left {
+    display: none;
+  }
+
+  /* контент */
+  .menu-mega-content {
+    flex-direction: column;
+    gap: 20px;
+    padding-left: 0;
+    border-left: none;
+  }
+
+  /* колонки */
+  .menu-mega-col {
+    min-width: 100%;
+  }
+
+  /* ссылки крупнее */
+  .menu-mega-col a {
+    font-size: 16px;
+    padding: 8px 0;
+  }
+
+}
+@media (max-width: 1024px) {
+
+  .menu-mega-inner {
+    padding: 30px;
+  }
+
+  .menu-mega-section {
+    gap: 40px;
+  }
+
+  .menu-mega-content {
+    gap: 40px;
+  }
+
+  .menu-mega-col {
+    min-width: 160px;
+  }
+
+}
+@media (max-width: 768px) {
+  .menu-mega-section[data-menu="phone"] .menu-mega-left {
+    margin-left: 0;
+  }
+}
