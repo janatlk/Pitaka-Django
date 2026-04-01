@@ -1,0 +1,536 @@
+# PITAKA Django Architecture
+
+## System Architecture Diagram
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                            USER BROWSER                                  │
+│                         (Client Side)                                    │
+└────────────────────────────────┬────────────────────────────────────────┘
+                                 │ HTTP Requests
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         DJANGO APPLICATION                               │
+│                          (pitaka project)                                │
+│  ┌───────────────────────────────────────────────────────────────────┐  │
+│  │                        URL ROUTING                                 │  │
+│  │                    (pitaka/urls.py)                                │  │
+│  │                                                                    │  │
+│  │  /          → apps.core.urls → HomeView                           │  │
+│  │  /catalog/  → apps.catalog.urls → CatalogView                     │  │
+│  │  /cart/     → apps.cart.urls → Cart Views                         │  │
+│  │  /accounts/ → apps.accounts.urls → Auth Views                     │  │
+│  │  /admin/    → django.contrib.admin                                │  │
+│  └───────────────────────────────────────────────────────────────────┘  │
+│                                 │                                        │
+│                                 ▼                                        │
+│  ┌───────────────────────────────────────────────────────────────────┐  │
+│  │                           VIEWS                                    │  │
+│  │                     (Business Logic)                               │  │
+│  │                                                                    │  │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                │  │
+│  │  │  HomeView   │  │ CatalogView │  │  Product    │                │  │
+│  │  │             │  │             │  │ DetailView  │                │  │
+│  │  │ - Featured  │  │ - Filters   │  │             │                │  │
+│  │  │ - New       │  │ - Search    │  │ - Related   │                │  │
+│  │  │ - Collections│ │ - Sort      │  │ - Add-ons   │                │  │
+│  │  └─────────────┘  └─────────────┘  └─────────────┘                │  │
+│  │                                                                    │  │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                │  │
+│  │  │  CartView   │  │ DeviceList  │  │ SearchView  │                │  │
+│  │  │             │  │  View       │  │             │                │  │
+│  │  │ - Add item  │  │ - By type   │  │ - Query     │                │  │
+│  │  │ - Update    │  │ - By model  │  │ - Suggestions│               │  │
+│  │  │ - WhatsApp  │  │             │  │             │                │  │
+│  │  └─────────────┘  └─────────────┘  └─────────────┘                │  │
+│  └───────────────────────────────────────────────────────────────────┘  │
+│                                 │                                        │
+│                                 ▼                                        │
+│  ┌───────────────────────────────────────────────────────────────────┐  │
+│  │                          MODELS                                    │  │
+│  │                      (Data Layer)                                  │  │
+│  │                                                                    │  │
+│  │  ┌──────────────┐     ┌──────────────┐     ┌──────────────┐       │  │
+│  │  │   Category   │     │    Brand     │     │    Product   │       │  │
+│  │  │              │     │              │     │              │       │  │
+│  │  │ - name       │     │ - name       │     │ - name       │       │  │
+│  │  │ - slug       │     │ - slug       │     │ - slug       │       │  │
+│  │  │ - image      │     │ - logo       │     │ - price      │       │  │
+│  │  └──────┬───────┘     └──────┬───────┘     │ - device_*   │       │  │
+│  │         │                    │              │ - design_*   │       │  │
+│  │         │ 1:N                │ 1:N          │ - series     │       │  │
+│  │         ▼                    ▼              └──────┬───────┘       │  │
+│  │  ┌─────────────────────────────────────────────────┼───────┐       │  │
+│  │  │                      Product                    │       │       │  │
+│  │  └─────────────────────────────────────────────────┼───────┘       │  │
+│  │         │                    │                     │               │  │
+│  │         │ 1:N                │ 1:1                 │ 1:N           │  │
+│  │         ▼                    ▼                     ▼               │  │
+│  │  ┌──────────────┐     ┌──────────────┐     ┌──────────────┐       │  │
+│  │  │ ProductImage │     │ProductContent│     │ AddOnProduct │       │  │
+│  │  │              │     │              │     │              │       │  │
+│  │  │ - image      │     │ - meta_*     │     │ - add_on     │       │  │
+│  │  │ - is_primary │     │ - faqs       │     │ - price      │       │  │
+│  │  │ - order      │     │ - specs      │     │ - discount   │       │  │
+│  │  └──────────────┘     └──────────────┘     └──────────────┘       │  │
+│  │                                                                    │  │
+│  │  ┌──────────────┐     ┌──────────────┐                            │  │
+│  │  │     Cart     │────▶│   CartItem   │                            │  │
+│  │  │              │     │              │                            │  │
+│  │  │ - session    │     │ - product    │                            │  │
+│  │  │ - created    │     │ - quantity   │                            │  │
+│  │  └──────────────┘     └──────────────┘                            │  │
+│  └───────────────────────────────────────────────────────────────────┘  │
+│                                 │                                        │
+│                                 ▼                                        │
+│  ┌───────────────────────────────────────────────────────────────────┐  │
+│  │                       TEMPLATES                                    │  │
+│  │                     (Presentation)                                 │  │
+│  │                                                                    │  │
+│  │  base.html (extends by all templates)                              │  │
+│  │      │                                                             │  │
+│  │      ├─► core/home.html                                           │  │
+│  │      ├─► catalog/catalog.html                                     │  │
+│  │      ├─► catalog/product_detail.html                              │  │
+│  │      ├─► catalog/device_list.html                                 │  │
+│  │      ├─► cart/cart.html                                           │  │
+│  │      └─► accounts/login.html                                      │  │
+│  │                                                                    │  │
+│  │  includes/ (reusable components)                                   │  │
+│  │      ├─► header.html                                              │  │
+│  │      ├─► footer.html                                              │  │
+│  │      ├─► cart_drawer.html                                         │  │
+│  │      └─► cart_count.html                                          │  │
+│  └───────────────────────────────────────────────────────────────────┘  │
+│                                 │                                        │
+└─────────────────────────────────┼────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         DATA STORAGE                                     │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐      │
+│  │   SQLite/PostgreSQL│  │   Static Files   │  │   Media Files    │      │
+│  │   (db.sqlite3)   │  │   (static/)      │  │   (media/)       │      │
+│  │                  │  │                  │  │                  │      │
+│  │ - Products       │  │ - CSS            │  │ - Product images │      │
+│  │ - Categories     │  │ - JavaScript     │  │ - Category imgs  │      │
+│  │ - Users          │  │ - Images         │  │ - User uploads   │      │
+│  │ - Carts          │  │ - Fonts          │  │                  │      │
+│  └──────────────────┘  └──────────────────┘  └──────────────────┘      │
+└─────────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      EXTERNAL SERVICES                                   │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐      │
+│  │    WhatsApp API  │  │  Font Awesome    │  │  (Future: S3)    │      │
+│  │                  │  │                  │  │                  │      │
+│  │ wa.me/{phone}    │  │ CDN icons        │  │ Cloud storage    │      │
+│  │ ?text={message}  │  │ 6.5.0            │  │                  │      │
+│  └──────────────────┘  └──────────────────┘  └──────────────────┘      │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+## Data Flow Diagrams
+
+### 1. Product Detail Page Request
+
+```
+User clicks product link
+         │
+         ▼
+┌─────────────────┐
+│  Browser sends  │
+│  GET request    │
+│  /catalog/      │
+│  product/       │
+│  iphone-17-pro- │
+│  sunset/        │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  URL Resolver   │
+│  Matches:       │
+│  product/<slug> │
+│  → Product-     │
+│  DetailView     │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  ProductDetail- │
+│  View.get()     │
+│                 │
+│  1. Get product │
+│     by slug     │
+│  2. Fetch       │
+│     related     │
+│  3. Get content │
+│  4. Build context│
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  Render template│
+│  catalog/       │
+│  product_detail.│
+│  html           │
+│                 │
+│  - Product info │
+│  - Images       │
+│  - Related      │
+│  - FAQs         │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  Return HTML    │
+│  to browser     │
+│                 │
+│  User sees      │
+│  product page   │
+└─────────────────┘
+```
+
+### 2. Add to Cart Flow
+
+```
+User clicks "Add to Cart"
+         │
+         ▼
+┌─────────────────┐
+│  JavaScript     │
+│  sends POST     │
+│  /cart/add/     │
+│  {product_id}   │
+│  (AJAX)         │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  add_to_cart    │
+│  view           │
+│                 │
+│  1. Get/Create  │
+│     cart from   │
+│     session     │
+│  2. Get product │
+│  3. Create/     │
+│     update item │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  Return JSON    │
+│  response       │
+│                 │
+│  {              │
+│    success: true│
+│    cart_count: 5│
+│  }              │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  JavaScript     │
+│  updates cart   │
+│  badge count    │
+│                 │
+│  Show toast     │
+│  notification   │
+└─────────────────┘
+```
+
+### 3. WhatsApp Checkout Flow
+
+```
+User clicks "Checkout via WhatsApp"
+         │
+         ▼
+┌─────────────────┐
+│  cart.get_      │
+│  whatsapp_url() │
+│                 │
+│  Builds message:│
+│  "Здравствуйте! │
+│   Хочу заказать:│
+│   - iPhone 17   │
+│     (Sunset)    │
+│     1 шт. —     │
+│     4990 ₽      │
+│   Итого: 4990 ₽"│
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  URL encode     │
+│  message        │
+│                 │
+│  https://wa.me/ │
+│  79001234567/   │
+│  ?text=         │
+│  {encoded_msg}  │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  Browser opens  │
+│  WhatsApp       │
+│  (app or web)   │
+│                 │
+│  User sends     │
+│  message to     │
+│  seller         │
+└─────────────────┘
+```
+
+## URL Hierarchy
+
+```
+/ (Home)
+│
+├─ catalog/ (All products)
+│   │
+│   ├─ search/ (Search results)
+│   │
+│   ├─ <device_type>/ (e.g., iphone, samsung)
+│   │   │
+│   │   └─ <device_model>/ (e.g., iphone-17-pro-max)
+│   │
+│   ├─ design/ (Design collections)
+│   │   │
+│   │   └─ <design_name>/ (e.g., sunset, moonrise)
+│   │
+│   ├─ series/ (Product series)
+│   │   │
+│   │   └─ <series>/ (e.g., ultra-slim, proguard)
+│   │
+│   └─ product/ (Product detail)
+│       │
+│       └─ <slug>/ (e.g., iphone-17-pro-max-sunset-ultra-slim)
+│
+├─ cart/ (Shopping cart)
+│   │
+│   ├─ add/<product_id>/ (Add item)
+│   ├─ remove/<item_id>/ (Remove item)
+│   └─ clear/ (Clear cart)
+│
+├─ accounts/ (User accounts)
+│   │
+│   ├─ login/ (Login)
+│   ├─ logout/ (Logout)
+│   ├─ register/ (Register)
+│   └─ profile/ (User profile)
+│
+└─ admin/ (Django admin)
+```
+
+## Template Inheritance Tree
+
+```
+base.html
+│
+├─ [includes/]
+│   ├─ header.html (included in base)
+│   ├─ footer.html (included in base)
+│   ├─ cart_drawer.html (included in base)
+│   └─ cart_count.html (included in base)
+│
+├─ core/home.html
+│   └─ Extends: base.html
+│   └─ Blocks: title, content, extra_css, extra_js
+│
+├─ catalog/
+│   ├─ catalog.html
+│   │   └─ Extends: base.html
+│   │   └─ Blocks: title, content, extra_css, extra_js
+│   │
+│   ├─ product_detail.html
+│   │   └─ Extends: base.html
+│   │   └─ Blocks: title, content, extra_css, extra_js
+│   │
+│   ├─ device_list.html
+│   │   └─ Extends: base.html
+│   │
+│   ├─ design_list.html
+│   │   └─ Extends: base.html
+│   │
+│   ├─ series_list.html
+│   │   └─ Extends: base.html
+│   │
+│   └─ search.html
+│       └─ Extends: base.html
+│
+├─ cart/
+│   └─ cart.html
+│       └─ Extends: base.html
+│
+└─ accounts/
+    ├─ login.html
+    │   └─ Extends: base.html
+    │
+    └─ profile.html
+        └─ Extends: base.html
+```
+
+## Database Schema
+
+```
+┌─────────────────────┐
+│      Category       │
+├─────────────────────┤
+│ id (PK)             │
+│ name                │
+│ slug (unique)       │
+│ image               │
+│ description         │
+└──────────┬──────────┘
+           │ 1:N
+           │
+           ▼
+┌─────────────────────┐     ┌─────────────────────┐
+│      Product        │     │       Brand         │
+├─────────────────────┤     ├─────────────────────┤
+│ id (PK)             │◀────│ id (PK)             │
+│ name                │  N:1 │ name                │
+│ slug (unique)       │     │ slug (unique)       │
+│ category_id (FK)    │     │ logo                │
+│ brand_id (FK)       │     └─────────────────────┘
+│ device_type         │
+│ device_model        │     ┌─────────────────────┐
+│ design_name         │     │   ProductContent    │
+│ series              │     ├─────────────────────┤
+│ price               │  1:1│ id (PK)             │
+│ sale_price          │────▶│ product_id (FK,UK)  │
+│ stock               │     │ meta_title          │
+│ is_active           │     │ meta_description    │
+│ is_new              │     │ meta_keywords       │
+│ is_featured         │     │ specs (JSON)        │
+│ description         │     │ faqs (JSON)         │
+│ features (JSON)     │     └─────────────────────┘
+│ created_at          │
+│ updated_at          │     ┌─────────────────────┐
+└──────────┬──────────┘     │   ProductImage      │
+           │ 1:N            ├─────────────────────┤
+           │                │ id (PK)             │
+           ├────────────────│ product_id (FK)     │
+           │ 1:N            │ image               │
+           │                │ is_primary          │
+           ▼                │ order               │
+┌─────────────────────┐     └─────────────────────┘
+│   AddOnProduct      │
+├─────────────────────┤     ┌─────────────────────┐
+│ id (PK)             │     │      Cart           │
+│ main_product_id(FK) │     ├─────────────────────┤
+│ add_on_id (FK)      │  1:N│ id (PK)             │
+│ discount_price      │────▶│ session_key(unique) │
+│ original_price      │     │ created_at          │
+│ order               │     │ updated_at          │
+└─────────────────────┘     └──────────┬──────────┘
+                                       │ 1:N
+                                       │
+                                       ▼
+                                ┌─────────────────────┐
+                                │    CartItem         │
+                                ├─────────────────────┤
+                                │ id (PK)             │
+                                │ cart_id (FK)        │
+                                │ product_id (FK)     │
+                                │ quantity            │
+                                │ added_at            │
+                                └─────────────────────┘
+```
+
+## Security Layers
+
+```
+┌─────────────────────────────────────────┐
+│           User Request                  │
+└─────────────────┬───────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────┐
+│  1. CSRF Protection                     │
+│     - All POST requests require token   │
+│     - django.middleware.csrf.CsrfView   │
+└─────────────────┬───────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────┐
+│  2. XSS Protection                      │
+│     - Auto-escape in templates          │
+│     - {% autoescape %} blocks           │
+└─────────────────┬───────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────┐
+│  3. SQL Injection Protection            │
+│     - Django ORM parameterization       │
+│     - No raw SQL queries                │
+└─────────────────┬───────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────┐
+│  4. Clickjacking Protection             │
+│     - XFrameOptionsMiddleware           │
+│     - SAMEORIGIN header                 │
+└─────────────────┬───────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────┐
+│  5. Authentication                      │
+│     - Session-based auth                │
+│     - Password hashing (PBKDF2)         │
+└─────────────────┬───────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────┐
+│  6. Authorization                       │
+│     - @login_required                   │
+│     - User permissions                  │
+│     - Object-level checks               │
+└─────────────────┬───────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────┐
+│  7. Secure Settings                     │
+│     - SECRET_KEY from env               │
+│     - DEBUG=False in production         │
+│     - ALLOWED_HOSTS configured          │
+└─────────────────────────────────────────┘
+```
+
+## Caching Strategy
+
+```
+┌─────────────────────────────────────────┐
+│           Page Cache (15 min)           │
+│                                         │
+│  - Home page (@cache_page(60*15))       │
+│  - Catalog page (@cache_page(60*10))    │
+│  - Product detail (per-product)         │
+└─────────────────────────────────────────┘
+
+┌─────────────────────────────────────────┐
+│        Query Optimization               │
+│                                         │
+│  - select_related() for FK              │
+│  - prefetch_related() for M2M/Reverse FK│
+│  - only() for partial fields            │
+│  - Database indexes on slug, fields     │
+└─────────────────────────────────────────┘
+
+┌─────────────────────────────────────────┐
+│        Template Fragment Cache          │
+│                                         │
+│  {% cache 300 product_images product.id %}
+│  ... image gallery ...                  │
+│  {% endcache %}                         │
+└─────────────────────────────────────────┘
+```
+
+---
+
+**Document Version:** 1.0  
+**Last Updated:** 2026-04-01
